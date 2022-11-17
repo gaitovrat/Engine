@@ -1,0 +1,8 @@
+#pragma once
+
+enum EObserverEvent
+{
+    VIEW_MATRIX_CHANGED,
+    PROJECTION_MATRIX_CHANGED,
+    LIGHT_POSITION_CHANGED
+};
