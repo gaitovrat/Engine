@@ -33,7 +33,7 @@ ResourceManager& ResourceManager::GetInstance()
 
 void ResourceManager::AddShader(std::string name)
 {
-	std::string nameDirectory = "Asset/" + name;
+	std::string nameDirectory = "asset/" + name;
 	std::string vertex = nameDirectory + ".vert";
 	std::string fragment = nameDirectory + ".frag";
 
