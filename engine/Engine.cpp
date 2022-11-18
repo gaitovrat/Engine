@@ -1,8 +1,11 @@
 #include <iostream>
 
 #include "App.hpp"
+#include "Log/Log.hpp"
 
-int main(const int argc, const char** argv) {
+int main() {
+    Log::debug("App started.");
+
     try {
         App app(640, 480, "Engine");
         app.Run();

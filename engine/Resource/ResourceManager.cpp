@@ -1,16 +1,12 @@
 #include "ResourceManager.hpp"
 
+#include <ranges>
+
 ResourceManager::ResourceManager()
 {
-	std::string names[] = {
-		"1",
-		"2.1",
-		"2.2",
-		"3.1",
-		"3.2",
-		"3.3"
-	};
-	for (const auto& name : names)
+	for (std::string names[] = {
+		     "lights"
+	     }; const auto& name : names)
 	{
 		AddShader(name);
 	}
@@ -18,9 +14,9 @@ ResourceManager::ResourceManager()
 
 ResourceManager::~ResourceManager()
 {
-	for (const auto& pair : m_shaders)
+	for (const auto& val : m_shaders | std::views::values)
 	{
-		delete pair.second;
+		delete val;
 	}
 }
 
@@ -31,21 +27,21 @@ ResourceManager& ResourceManager::GetInstance()
 	return instance;
 }
 
-void ResourceManager::AddShader(std::string name)
+void ResourceManager::AddShader(const std::string name)
 {
-	std::string nameDirectory = "assets/" + name;
-	std::string vertex = nameDirectory + ".vert";
-	std::string fragment = nameDirectory + ".frag";
+	const std::string nameDirectory = "assets/" + name;
+	const std::string vertex = nameDirectory + ".vert";
+	const std::string fragment = nameDirectory + ".frag";
 
-	const char* cvertex = vertex.c_str();
-	const char* cfragment = fragment.c_str();
+	const char* cVertex = vertex.c_str();
+	const char* cFragment = fragment.c_str();
 
-	m_shaders[name] = new Shader(cvertex, cfragment);
+	m_shaders[name] = new Shader(cVertex, cFragment);
 
 	Link(name);
 }
 
-Shader& ResourceManager::GetShader(std::string name)
+Shader& ResourceManager::GetShader(const std::string name)
 {
 	return *m_shaders[name];
 }
@@ -55,7 +51,7 @@ std::map<std::string, Shader*>& ResourceManager::GetShaders()
 	return m_shaders;
 }
 
-void ResourceManager::Link(std::string name)
+void ResourceManager::Link(const std::string name)
 {
 	m_shaders[name]->Link();
 }

@@ -4,11 +4,9 @@
 #include <string>
 
 #include "Shader.hpp"
-#include "Camera.hpp"
 
 class ResourceManager final
 {
-private:
 	ResourceManager();
 
 public:

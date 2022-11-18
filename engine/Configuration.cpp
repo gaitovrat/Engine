@@ -1,5 +1,11 @@
 #include "Configuration.hpp"
 
-float Configuration::PlayerSpeed = .05f;
-float Configuration::Sensivity = .1f;
-float Configuration::Level = 0;
+float Configuration::playerSpeed = .05f;
+float Configuration::sensivity = .1f;
+float Configuration::level = 0;
+
+#ifdef NDEBUG
+ELogLevel Configuration::logLevel = WARNING;
+#else
+ELogLevel Configuration::logLevel = DEBUG;
+#endif

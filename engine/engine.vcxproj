@@ -115,6 +115,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>.;../library/glew/include;../library/glfw/include;../library/glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -132,6 +133,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>.;../library/glew/include;../library/glfw/include;../library/glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -154,6 +156,7 @@
     <ClCompile Include="KeyboardEvent\KeyboardEvent.cpp" />
     <ClCompile Include="KeyboardEvent\KeyboardEventListener.cpp" />
     <ClCompile Include="Light.cpp" />
+    <ClCompile Include="Log\Log.cpp" />
     <ClCompile Include="Matrix\AbstractMatrixComponent.cpp" />
     <ClCompile Include="Matrix\RotateMatrixComponent.cpp" />
     <ClCompile Include="Matrix\ScaleMatrixComponent.cpp" />
@@ -175,7 +178,6 @@
     <ClCompile Include="Resource\Shader.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Transformation.cpp" />
-    <ClCompile Include="Util\ArgumentsUtil.cpp" />
     <ClCompile Include="Util\FileUtil.cpp" />
     <ClCompile Include="Util\ShaderUtil.cpp" />
     <ClCompile Include="Window.cpp" />
@@ -193,6 +195,8 @@
     <ClInclude Include="KeyboardEvent\KeyboardEvent.hpp" />
     <ClInclude Include="KeyboardEvent\KeyboardEventListener.hpp" />
     <ClInclude Include="Light.hpp" />
+    <ClInclude Include="Log\ELogLevel.hpp" />
+    <ClInclude Include="Log\Log.hpp" />
     <ClInclude Include="Matrix\AbstractMatrixComponent.hpp" />
     <ClInclude Include="Matrix\RotateMatrixComponent.hpp" />
     <ClInclude Include="Matrix\ScaleMatrixComponent.hpp" />
@@ -225,7 +229,6 @@
     <ClInclude Include="Resource\Shader.hpp" />
     <ClInclude Include="Scene.hpp" />
     <ClInclude Include="Transformation.hpp" />
-    <ClInclude Include="Util\ArgumentsUtil.hpp" />
     <ClInclude Include="Util\FileUtil.hpp" />
     <ClInclude Include="Util\ShaderUtil.hpp" />
     <ClInclude Include="Window.hpp" />

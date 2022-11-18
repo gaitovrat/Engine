@@ -2,11 +2,8 @@
 
 #include "Exception/GLFWException.hpp"
 #include "Exception/GLException.hpp"
-#include "Resource/ResourceManager.hpp"
-#include "Configuration.hpp"
 #include "KeyboardEvent/KeyboardEvent.hpp"
-
-#include <iostream>
+#include "Camera.hpp"
 
 Window::Window(int width, int height, const char* title)
 {

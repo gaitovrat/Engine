@@ -78,7 +78,7 @@ void Camera::Rotate(const double x, const double y)
     m_lastX = x;
     m_lastY = y;
 
-    float sensitivity = Configuration::Sensivity;
+    float sensitivity = Configuration::sensivity;
     xoffset *= sensitivity;
     yoffset *= sensitivity;
 
