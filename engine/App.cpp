@@ -80,27 +80,27 @@ void App::Run()
 void App::RegisterDefaultKeyEvents()
 {
 	for (const std::vector listeners = {
-		     KeyboardEventListener(m_window, EKey::KEY_S, []() {
+		     KeyboardEventListener(m_window, KEY_S, []() {
 			     Camera::GetInstance().MoveBackward(Configuration::playerSpeed);
 			     std::cout << "move backward clicked\n";
 		     }),
-		     KeyboardEventListener(m_window, EKey::KEY_W, []() {
+		     KeyboardEventListener(m_window, KEY_W, []() {
 			     Camera::GetInstance().MoveForward(Configuration::playerSpeed);
 			     std::cout << "move backward clicked\n";
 		     }),
-		     KeyboardEventListener(m_window, EKey::KEY_A, []() {
+		     KeyboardEventListener(m_window, KEY_A, []() {
 			     Camera::GetInstance().MoveLeft(Configuration::playerSpeed);
 			     std::cout << "move backward clicked\n";
 		     }),
-		     KeyboardEventListener(m_window, EKey::KEY_D, []() {
+		     KeyboardEventListener(m_window, KEY_D, []() {
 			     Camera::GetInstance().MoveRight(Configuration::playerSpeed);
 			     std::cout << "move backward clicked\n";
 		     }),
-		     KeyboardEventListener(m_window, EKey::KEY_S, []() {
+		     KeyboardEventListener(m_window, KEY_S, []() {
 			     Camera::GetInstance().MoveBackward(Configuration::playerSpeed);
 			     std::cout << "move backward clicked\n";
 		     }),
-		     KeyboardEventListener(m_window, EKey::KEY_ESCAPE, [this]() {
+		     KeyboardEventListener(m_window, KEY_ESCAPE, [this]() {
 			     m_window.Close();
 		     })
 	     }; const auto& listener : listeners)
