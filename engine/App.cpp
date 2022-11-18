@@ -102,34 +102,6 @@ void App::RegisterDefaultKeyEvents()
 		     }),
 		     KeyboardEventListener(m_window, EKey::KEY_ESCAPE, [this]() {
 			     m_window.Close();
-		     }),
-		     KeyboardEventListener(m_window, EKey::KEY_1, [this]() {
-			     if (!m_scenes.empty())
-			     {
-				     Configuration::level = 0;
-				     m_scenes[0].UpdateObjects();
-			     }
-		     }),
-		     KeyboardEventListener(m_window, EKey::KEY_2, [this]() {
-			     if (m_scenes.size() > 1)
-			     {
-				     Configuration::level = 1;
-				     m_scenes[1].UpdateObjects();
-			     }
-		     }),
-		     KeyboardEventListener(m_window, EKey::KEY_3, [this]() {
-			     if (m_scenes.size() > 2)
-			     {
-				     Configuration::level = 2;
-				     m_scenes[2].UpdateObjects();
-			     }
-		     }),
-		     KeyboardEventListener(m_window, EKey::KEY_4, [this]() {
-			     if (m_scenes.size() > 3)
-			     {
-				     Configuration::level = 3;
-				     m_scenes[3].UpdateObjects();
-			     }
 		     })
 	     }; const auto& listener : listeners)
     {

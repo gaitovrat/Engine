@@ -5,7 +5,7 @@
 #include "KeyboardEvent/KeyboardEvent.hpp"
 #include "Camera.hpp"
 
-Window::Window(int width, int height, const char* title)
+Window::Window(const int width, const int height, const char* title)
 {
     if (glfwInit() == false)
     {
@@ -36,11 +36,11 @@ Window::Window(int width, int height, const char* title)
 
     glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
-    glfwSetCursorPosCallback(m_window, [](GLFWwindow* window, double x, double y) {
-            Camera::GetInstance().Rotate(x, y);
+    glfwSetCursorPosCallback(m_window, [](GLFWwindow* window, const double l_x, const double l_y) {
+            Camera::GetInstance().Rotate(l_x, l_y);
     });
-    glfwSetWindowSizeCallback(m_window, [](GLFWwindow* window, int width, int height) {
-        Camera::GetInstance().UpdateViewport(width, height);
+    glfwSetWindowSizeCallback(m_window, [](GLFWwindow* window, const int l_width, const int l_height) {
+        Camera::GetInstance().UpdateViewport(l_width, l_height);
     });
 }
 
