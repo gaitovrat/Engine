@@ -1,2 +1,4 @@
-Engine.xcodeproj/xcuserdata
-
+*.vcxproj.user
+Debug
+Release
+.vs

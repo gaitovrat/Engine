@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{88ebc765-4e67-4b51-b317-5188efbc8197}</ProjectGuid>
+    <RootNamespace>engine</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <EnableASAN>true</EnableASAN>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <EnableASAN>true</EnableASAN>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)$(Configuration)\Intermediate</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)$(Configuration)\Intermediate</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>.;../library/glew/include;../library/glfw/include;../library/glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>../library/glfw/lib-vc2022;../library/glew/lib/Release/x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3dll.lib;glew32.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>.;../library/glew/include;../library/glfw/include;../library/glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>../library/glfw/lib-vc2022;../library/glew/lib/Release/x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3dll.lib;glew32.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="App.cpp" />
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Composite\Composite.cpp" />
+    <ClCompile Include="Configuration.cpp" />
+    <ClCompile Include="Engine.cpp" />
+    <ClCompile Include="Exception\FileException.cpp" />
+    <ClCompile Include="Exception\GLException.cpp" />
+    <ClCompile Include="Exception\GLFWException.cpp" />
+    <ClCompile Include="KeyboardEvent\KeyboardEvent.cpp" />
+    <ClCompile Include="KeyboardEvent\KeyboardEventListener.cpp" />
+    <ClCompile Include="Light.cpp" />
+    <ClCompile Include="Matrix\AbstractMatrixComponent.cpp" />
+    <ClCompile Include="Matrix\RotateMatrixComponent.cpp" />
+    <ClCompile Include="Matrix\ScaleMatrixComponent.cpp" />
+    <ClCompile Include="Matrix\TranslateMatrixComponent.cpp" />
+    <ClCompile Include="Render\Renderer.cpp" />
+    <ClCompile Include="Render\Shader\BaseShader.cpp" />
+    <ClCompile Include="Render\Shader\FragmentShader.cpp" />
+    <ClCompile Include="Render\Shader\VertexShader.cpp" />
+    <ClCompile Include="Render\VertexBuffer.cpp" />
+    <ClCompile Include="Resource\DrawableObject.cpp" />
+    <ClCompile Include="Resource\Model\Bushes.cpp" />
+    <ClCompile Include="Resource\Model\Gift.cpp" />
+    <ClCompile Include="Resource\Model\Plain.cpp" />
+    <ClCompile Include="Resource\Model\Sphere.cpp" />
+    <ClCompile Include="Resource\Model\SuziFlat.cpp" />
+    <ClCompile Include="Resource\Model\SuziSmooth.cpp" />
+    <ClCompile Include="Resource\Model\Tree.cpp" />
+    <ClCompile Include="Resource\ResourceManager.cpp" />
+    <ClCompile Include="Resource\Shader.cpp" />
+    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="Transformation.cpp" />
+    <ClCompile Include="Util\ArgumentsUtil.cpp" />
+    <ClCompile Include="Util\FileUtil.cpp" />
+    <ClCompile Include="Util\ShaderUtil.cpp" />
+    <ClCompile Include="Window.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="App.hpp" />
+    <ClInclude Include="Camera.hpp" />
+    <ClInclude Include="Composite\Composite.hpp" />
+    <ClInclude Include="Composite\IComponent.hpp" />
+    <ClInclude Include="Configuration.hpp" />
+    <ClInclude Include="Exception\FileException.hpp" />
+    <ClInclude Include="Exception\GLException.hpp" />
+    <ClInclude Include="Exception\GLFWException.hpp" />
+    <ClInclude Include="KeyboardEvent\EKey.hpp" />
+    <ClInclude Include="KeyboardEvent\KeyboardEvent.hpp" />
+    <ClInclude Include="KeyboardEvent\KeyboardEventListener.hpp" />
+    <ClInclude Include="Light.hpp" />
+    <ClInclude Include="Matrix\AbstractMatrixComponent.hpp" />
+    <ClInclude Include="Matrix\RotateMatrixComponent.hpp" />
+    <ClInclude Include="Matrix\ScaleMatrixComponent.hpp" />
+    <ClInclude Include="Matrix\TranslateMatrixComponent.hpp" />
+    <ClInclude Include="Observer\EObserverEvent.hpp" />
+    <ClInclude Include="Observer\IObserver.hpp" />
+    <ClInclude Include="Observer\ISubject.hpp" />
+    <ClInclude Include="Render\Renderer.hpp" />
+    <ClInclude Include="Render\Shader\BaseShader.hpp" />
+    <ClInclude Include="Render\Shader\EShaderType.hpp" />
+    <ClInclude Include="Render\Shader\FragmentShader.hpp" />
+    <ClInclude Include="Render\Shader\VertexShader.hpp" />
+    <ClInclude Include="Render\VertexBuffer.hpp" />
+    <ClInclude Include="Resource\DrawableObject.hpp" />
+    <ClInclude Include="Resource\Model\Bushes.hpp" />
+    <ClInclude Include="Resource\Model\Gift.hpp" />
+    <ClInclude Include="Resource\Model\Plain.hpp" />
+    <ClInclude Include="Resource\Model\Raw\bushes.hpp" />
+    <ClInclude Include="Resource\Model\Raw\gift.hpp" />
+    <ClInclude Include="Resource\Model\Raw\plain.hpp" />
+    <ClInclude Include="Resource\Model\Raw\sphere.hpp" />
+    <ClInclude Include="Resource\Model\Raw\suzi_flat.hpp" />
+    <ClInclude Include="Resource\Model\Raw\suzi_smooth.hpp" />
+    <ClInclude Include="Resource\Model\Raw\tree.hpp" />
+    <ClInclude Include="Resource\Model\Sphere.hpp" />
+    <ClInclude Include="Resource\Model\SuziFlat.hpp" />
+    <ClInclude Include="Resource\Model\SuziSmooth.hpp" />
+    <ClInclude Include="Resource\Model\Tree.hpp" />
+    <ClInclude Include="Resource\ResourceManager.hpp" />
+    <ClInclude Include="Resource\Shader.hpp" />
+    <ClInclude Include="Scene.hpp" />
+    <ClInclude Include="Transformation.hpp" />
+    <ClInclude Include="Util\ArgumentsUtil.hpp" />
+    <ClInclude Include="Util\FileUtil.hpp" />
+    <ClInclude Include="Util\ShaderUtil.hpp" />
+    <ClInclude Include="Window.hpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
