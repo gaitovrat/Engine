@@ -4,12 +4,11 @@
 
 uint64_t AbstractLight::m_lastId = 0;
 
-AbstractLight::AbstractLight() : AbstractLight(glm::vec3(), 1.f, .0f, .0f, glm::vec3(), glm::vec3(), glm::vec3())
-{
-}
-
-AbstractLight::AbstractLight(const glm::vec3& position, const float constant, const float linear, const float quadratic, const glm::vec3& ambient,
+AbstractLight::AbstractLight(const glm::vec3& position, const glm::vec3& direction, float cutOff, float outerCutOff, const float constant, const float linear, const float quadratic, const glm::vec3& ambient,
 	const glm::vec3& diffuse, const glm::vec3& specular): m_position(position),
+                                                          m_direction(direction),
+                                                          m_cutOff(cutOff),
+                                                          m_outerCutOff(outerCutOff),
 	                                                      m_constant(constant),
 	                                                      m_linear(linear),
 	                                                      m_quadratic(quadratic),
@@ -23,6 +22,9 @@ AbstractLight::AbstractLight(const glm::vec3& position, const float constant, co
 AbstractLight::AbstractLight(AbstractLight&& other) noexcept:
 	m_observers(std::move(other.m_observers)),
 	m_position(other.m_position),
+    m_direction(other.m_direction),
+    m_cutOff(other.m_cutOff),
+	m_outerCutOff(other.m_outerCutOff),
 	m_constant(other.m_constant),
 	m_linear(other.m_linear),
 	m_quadratic(other.m_quadratic),
@@ -40,6 +42,9 @@ AbstractLight& AbstractLight::operator=(const AbstractLight& other)
 
 	m_observers = other.m_observers;
 	m_position = other.m_position;
+	m_direction = other.m_direction;
+	m_cutOff = other.m_cutOff;
+	m_outerCutOff = other.m_outerCutOff;
 	m_constant = other.m_constant;
 	m_linear = other.m_linear;
 	m_quadratic = other.m_quadratic;
@@ -58,6 +63,9 @@ AbstractLight& AbstractLight::operator=(AbstractLight&& other) noexcept
 
 	m_observers = std::move(other.m_observers);
 	m_position = other.m_position;
+	m_direction = other.m_direction;
+	m_cutOff = other.m_cutOff;
+	m_outerCutOff = other.m_outerCutOff;
 	m_constant = other.m_constant;
 	m_linear = other.m_linear;
 	m_quadratic = other.m_quadratic;
@@ -163,4 +171,34 @@ void AbstractLight::NotifyAll(const EObserverEvent event)
     {
         element->Notify(event, this);
     }
+}
+
+glm::vec3 AbstractLight::Direction() const
+{
+	return m_direction;
+}
+
+void AbstractLight::SetDirection(const glm::vec3 direction)
+{
+	m_direction = direction;
+}
+
+float AbstractLight::CutOff() const
+{
+	return m_cutOff;
+}
+
+void AbstractLight::SetCutOff(const float cutOff)
+{
+	m_cutOff = cutOff;
+}
+
+float AbstractLight::OuterCutOff() const
+{
+	return m_outerCutOff;
+}
+
+void AbstractLight::SetOuterCutOff(const float outerCutOff)
+{
+	m_outerCutOff = outerCutOff;
 }

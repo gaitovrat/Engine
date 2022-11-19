@@ -156,7 +156,9 @@
     <ClCompile Include="KeyboardEvent\KeyboardEvent.cpp" />
     <ClCompile Include="KeyboardEvent\KeyboardEventListener.cpp" />
     <ClCompile Include="Light\AbstractLight.cpp" />
+    <ClCompile Include="Light\DirectionalLight.cpp" />
     <ClCompile Include="Light\PointLight.cpp" />
+    <ClCompile Include="Light\SpotLight.cpp" />
     <ClCompile Include="Log\Log.cpp" />
     <ClCompile Include="Matrix\AbstractMatrixComponent.cpp" />
     <ClCompile Include="Matrix\RotateMatrixComponent.cpp" />
@@ -196,8 +198,10 @@
     <ClInclude Include="KeyboardEvent\KeyboardEvent.hpp" />
     <ClInclude Include="KeyboardEvent\KeyboardEventListener.hpp" />
     <ClInclude Include="Light\AbstractLight.hpp" />
+    <ClInclude Include="Light\DirectionalLight.hpp" />
     <ClInclude Include="Light\ELightType.hpp" />
     <ClInclude Include="Light\PointLight.hpp" />
+    <ClInclude Include="Light\SpotLight.hpp" />
     <ClInclude Include="Log\ELogLevel.hpp" />
     <ClInclude Include="Log\Log.hpp" />
     <ClInclude Include="Matrix\AbstractMatrixComponent.hpp" />

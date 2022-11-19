@@ -9,7 +9,10 @@
 #include "KeyboardEvent/KeyboardEvent.hpp"
 #include "KeyboardEvent/EKey.hpp"
 #include "Configuration.hpp"
+#include "Light/DirectionalLight.hpp"
 #include "Light/PointLight.hpp"
+#include "Light/SpotLight.hpp"
+#include "Light/AbstractLight.hpp"
 #include "Camera.hpp"
 
 App::App(const int width, const int height, const char *title) :
@@ -22,16 +25,23 @@ App::App(const int width, const int height, const char *title) :
 
     auto& scene = m_scenes.back();
 
-    auto light = new PointLight;
-    light->SetPosition(glm::vec3(0, 3, 0));
+    AbstractLight* light = new DirectionalLight;
+    light->SetPosition(glm::vec3(-3, 0, 0));
     scene.AddLight(light);
 
+	auto object = new SuziFlat;
+	scene.AddObject(object);
+
+	object = new SuziFlat;
+	object->GetTransformation().AddTranslate(glm::vec3(5.f, .0f, .0f));
+	scene.AddObject(object);
+
 	light = new PointLight;
-	light->SetPosition(glm::vec3(-3, 0, 0));
+	light->SetPosition(glm::vec3(5.f, 3.f, 0.f));
 	scene.AddLight(light);
 
-	const auto object = new SuziFlat;
-	scene.AddObject(object);
+	light = new SpotLight;
+	scene.AddLight(light);
 }
 
 void App::Run()

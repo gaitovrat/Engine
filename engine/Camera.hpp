@@ -34,11 +34,12 @@ public:
 
 	void UpdateViewport(int width, int height);
 
-	int GetWidth() const;
+	[[nodiscard]] int Width() const;
 
-	int GetHeight() const;
+	[[nodiscard]] int Height() const;
 
-	glm::vec3 GetEye() const;
+	[[nodiscard]] glm::vec3 Eye() const;
+	[[nodiscard]] glm::vec3 Target() const;
 
 private:
 	void UpdateTarget(glm::vec3 target);

@@ -3,10 +3,16 @@
 #define MAX_LIGHTS 8
 
 #define POINT_LIGHT 0
+#define DIRECTIONAL_LIGHT 1
+#define SPOT_LIGHT 2
 
 struct Light 
 {
     vec3 position;
+    vec3 direction;
+
+    float cutOff;
+    float outerCutOff;
 	
 	float constant;
     float linear;
@@ -62,6 +68,62 @@ vec3 calculatePointLight(vec3 viewVector, vec3 color, Light light)
     return ambient + diffuse + specular;
 }
 
+vec3 calculateDirectionalLight(vec3 viewVector, vec3 color, Light light)
+{
+    vec3 lightDirection = normalize(-light.direction);
+    vec3 ambient = light.ambient;
+    
+    // diffuse shading
+    vec3 normal = normalize(ex_worldNormal);
+    vec3 lightPosition = light.position;
+    vec3 lightVector = normalize(lightPosition - vec3(ex_worldPosition));
+    float diff = max(dot(normal, lightVector), 0.0);
+    vec3 diffuse = light.diffuse * diff * color;
+
+    // specular shading
+    vec3 reflectDirecton = reflect(-lightVector, normal);
+    float spec = pow(max(dot(viewVector, reflectDirecton), 0.0), 32);
+    vec3 specular = light.specular * spec * color;
+    
+    return (ambient + diffuse + specular);
+}
+
+vec3 calculateSpotLight(vec3 viewVector, vec3 color, Light light)
+{
+    vec3 lightPosition = light.position;
+    vec3 lightVector = normalize(lightPosition - vec3(ex_worldPosition));
+    vec3 normal = normalize(ex_worldNormal);
+
+    float theta = dot(lightVector, normalize(-light.direction)); 
+    vec3 result;
+    if(theta > light.cutOff)
+    {
+        vec3 ambient = light.ambient;
+    
+        float diff = max(dot(lightVector, normal), 0.0);
+        vec3 diffuse = light.diffuse * diff * color;
+    
+        vec3 reflectVector = reflect(-lightVector, normal);
+        float spec = pow(max(dot(viewVector, reflectVector), 0.0), 32);
+        vec3 specular = light.specular * spec * color;
+
+        float dist = length(light.position - vec3(ex_worldPosition));
+        float attenuation = attenuation(light.constant, light.linear, light.quadratic, dist);
+    
+        diffuse *= attenuation;
+        specular *= attenuation;
+        
+        result = vec3(ambient + diffuse + specular);
+
+    }
+    else
+    {
+       result = vec3(light.ambient);
+    }
+
+    return result;
+}
+
 void main () 
 {
     vec3 viewVector = normalize(eye - vec3(ex_worldPosition));
@@ -69,7 +131,20 @@ void main ()
 
     vec3 result = vec3(0.0);
     for (int i = 0; i < lightsSize; i++)
-        result += calculatePointLight(viewVector, color, lights[i]);
+    {
+        if (lights[i].lightType == DIRECTIONAL_LIGHT) 
+        {
+            result += calculateDirectionalLight(viewVector, color, lights[i]);
+        } 
+        else if (lights[i].lightType == POINT_LIGHT)
+        {
+            result += calculatePointLight(viewVector, color, lights[i]);
+        } 
+        else
+        {
+            result += calculateSpotLight(viewVector, color, lights[i]);
+        }
+    }
 
     /*frag_colour = vec4(0.5, 0.5, 0.5, 1.0);*/
     frag_colour = vec4(result, 1.0);

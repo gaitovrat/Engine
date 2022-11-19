@@ -25,28 +25,28 @@ void Camera::MoveLeft(const float speed)
 {
 	m_eye -= glm::normalize(glm::cross(m_target, m_up)) * speed;
 
-	NotifyAll(EObserverEvent::VIEW_MATRIX_CHANGED);
+	NotifyAll(VIEW_MATRIX_CHANGED);
 }
 
 void Camera::MoveForward(const float speed)
 {
 	m_eye += speed * m_target;
 
-    NotifyAll(EObserverEvent::VIEW_MATRIX_CHANGED);
+    NotifyAll(VIEW_MATRIX_CHANGED);
 }
 
 void Camera::MoveRight(const float speed)
 {
 	m_eye += glm::normalize(glm::cross(m_target, m_up)) * speed;
 
-    NotifyAll(EObserverEvent::VIEW_MATRIX_CHANGED);
+    NotifyAll(VIEW_MATRIX_CHANGED);
 }
 
 void Camera::MoveBackward(float speed)
 {
 	m_eye -= speed * m_target;
 
-    NotifyAll(EObserverEvent::VIEW_MATRIX_CHANGED);
+    NotifyAll(VIEW_MATRIX_CHANGED);
 }
 
 void Camera::NotifyAll(const EObserverEvent event)
@@ -66,7 +66,7 @@ void Camera::UpdateTarget(glm::vec3 eye)
 {
 	m_target = glm::normalize(eye);
 
-    NotifyAll(EObserverEvent::VIEW_MATRIX_CHANGED);
+    NotifyAll(VIEW_MATRIX_CHANGED);
 }
 
 void Camera::Rotate(const double x, const double y)
@@ -106,17 +106,22 @@ void Camera::UpdateViewport(int width, int height)
     NotifyAll(PROJECTION_MATRIX_CHANGED);
 }
 
-int Camera::GetWidth() const
+int Camera::Width() const
 {
     return m_width;
 }
 
-int Camera::GetHeight() const
+int Camera::Height() const
 {
     return m_height;
 }
 
-glm::vec3 Camera::GetEye() const
+glm::vec3 Camera::Eye() const
 {
     return m_eye;
+}
+
+glm::vec3 Camera::Target() const
+{
+    return m_target;
 }

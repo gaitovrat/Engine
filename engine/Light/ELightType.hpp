@@ -2,5 +2,7 @@
 
 enum ELightType
 {
-	POINT = 0
+	POINT = 0,
+	DIRECTIONAL,
+	SPOT
 };
