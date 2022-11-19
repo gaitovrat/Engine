@@ -8,10 +8,9 @@
 #include "Exception/GLException.hpp"
 
 #include "Camera.hpp"
-#include "Light.hpp"
 
-Shader::Shader() : m_id(0), m_modelId(0), m_projectionId(0), m_viewId(0), m_shaders(), m_modelMatrix(1.f), m_projectionMatrix(1.f), m_viewMatrix(1.f),
-	m_lightId(0), m_lightPosition(0), m_light(nullptr), m_eyeId(0)
+Shader::Shader() : m_id(0), m_modelId(0), m_modelMatrix(1.f), m_projectionId(0), m_projectionMatrix(1.f), m_viewId(0), m_viewMatrix(1.f),
+                   m_eyeId(0)
 {
 	m_id = glCreateProgram();
 
@@ -31,12 +30,6 @@ Shader::Shader(const char* vertexShaderSource, const char* fragmentShaderSource)
 {
 	m_shaders.emplace_back(vertexShaderSource, VERTEX);
 	m_shaders.emplace_back(fragmentShaderSource, FRAGMENT);
-}
-
-Shader::Shader(const VertexShader& vertexShader, const FragmentShader& fragmentShader, Light& light) : Shader(vertexShader, fragmentShader)
-{
-	light.AddObserver(this);
-	m_light = &light;
 }
 
 void Shader::Link()
@@ -61,7 +54,6 @@ void Shader::Link()
 	m_projectionId = glGetUniformLocation(m_id, "projection");
 	m_viewId = glGetUniformLocation(m_id, "view");
 	m_eyeId = glGetUniformLocation(m_id, "eye");
-	m_lightId = glGetUniformLocation(m_id, "light");
 }
 
 void Shader::Activate() const
@@ -74,19 +66,45 @@ void Shader::SetModelMatrix(const glm::mat4 modelMatrix)
 	m_modelMatrix = modelMatrix;
 }
 
+void Shader::SetLights(const std::vector<AbstractLight*>& lights)
+{
+	m_lights = lights;
+}
+
 void Shader::SetProjectionMatrix(const int width, const int height)
 {
 	m_projectionMatrix = glm::perspective(glm::radians(45.0f), float(width) / float(height), 0.1f, 100.0f);
 }
 
-void Shader::SetLight(Light& light)
+void Shader::UpdateLights(const std::vector<AbstractLight*>& lights) const
 {
-	if (m_light == &light)
+	for (const auto& light : lights)
 	{
-		return;
+		UpdateLight(light, light->Id());
 	}
+}
 
-	m_light = &light;
+void Shader::UpdateLight(const AbstractLight* light, const uint64_t index) const
+{
+	const auto position = glGetUniformLocation(m_id, ("lights[" + std::to_string(index) + "].position").c_str());
+	const auto ambient = glGetUniformLocation(m_id, ("lights[" + std::to_string(index) + "].ambient").c_str());
+	const auto diffuse = glGetUniformLocation(m_id, ("lights[" + std::to_string(index) + "].diffuse").c_str());
+	const auto specular = glGetUniformLocation(m_id, ("lights[" + std::to_string(index) + "].specular").c_str());
+	const auto constant = glGetUniformLocation(m_id, ("lights[" + std::to_string(index) + "].constant").c_str());
+	const auto linear = glGetUniformLocation(m_id, ("lights[" + std::to_string(index) + "].linear").c_str());
+	const auto quadratic = glGetUniformLocation(m_id, ("lights[" + std::to_string(index) + "].quadratic").c_str());
+	const auto type = glGetUniformLocation(m_id, ("lights[" + std::to_string(index) + "].lightType").c_str());
+	const auto lightsSize = glGetUniformLocation(m_id, "lightsSize");
+
+	glUniform3f(position, light->Position().x, light->Position().y, light->Position().z);
+	glUniform3f(ambient, light->Ambient().x * 0.1f, light->Ambient().y * 0.1f, light->Ambient().z * 0.1f);
+	glUniform3f(diffuse, light->Diffuse().x, light->Diffuse().y, light->Diffuse().z);
+	glUniform3f(specular, light->Specular().x, light->Specular().y, light->Specular().z);
+	glUniform1f(constant, light->Constant());
+	glUniform1f(linear, light->Linear());
+	glUniform1f(quadratic, light->Quadratic());
+	glUniform1i(type, light->Type());
+	glUniform1i(lightsSize, m_lights.size());
 }
 
 void Shader::UpdateUniforms() const
@@ -95,12 +113,13 @@ void Shader::UpdateUniforms() const
 	glUniformMatrix4fv(m_projectionId, 1, GL_FALSE, glm::value_ptr(m_projectionMatrix));
 	glUniformMatrix4fv(m_modelId, 1, GL_FALSE, glm::value_ptr(m_modelMatrix));
 	glUniform3fv(m_eyeId, 1, glm::value_ptr(Camera::GetInstance().GetEye()));
-	glUniform3fv(m_lightId, 1, glm::value_ptr(m_lightPosition));
+
+	UpdateLights(m_lights);
 }
 
-void Shader::Notify(EObserverEvent event)
+void Shader::Notify(const EObserverEvent event, ISubject* source)
 {
-	auto& camera = Camera::GetInstance();
+	const auto& camera = Camera::GetInstance();
 
     switch (event)
     {
@@ -111,6 +130,8 @@ void Shader::Notify(EObserverEvent event)
 			SetProjectionMatrix(camera.GetWidth(), camera.GetHeight());
             break;
 		case LIGHT_POSITION_CHANGED:
-			m_lightPosition = m_light->GetPosition();
+			const auto light = dynamic_cast<AbstractLight*>(source);
+			UpdateLight(light, light->Id());
+			break;
     }
 }

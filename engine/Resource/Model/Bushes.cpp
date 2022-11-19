@@ -2,8 +2,9 @@
 
 #include "Resource/ResourceManager.hpp"
 #include "Raw/bushes.hpp"
+#include "Configuration.hpp"
 
-Bushes::Bushes() : Bushes(ResourceManager::GetInstance().GetShader("1"))
+Bushes::Bushes() : Bushes(ResourceManager::GetInstance().GetShader(Configuration::defaultShader))
 {
 }
 

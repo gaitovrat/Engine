@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>
 #include "Log/ELogLevel.hpp"
 
 struct Configuration
@@ -8,4 +9,5 @@ struct Configuration
 	static float sensivity;
 	static float level;
 	static ELogLevel logLevel;
+	static std::string defaultShader;
 };

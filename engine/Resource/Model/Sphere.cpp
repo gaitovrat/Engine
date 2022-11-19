@@ -2,8 +2,9 @@
 
 #include "Raw/sphere.hpp"
 #include "Resource/ResourceManager.hpp"
+#include "Configuration.hpp"
 
-Sphere::Sphere() : Sphere(ResourceManager::GetInstance().GetShader("1"))
+Sphere::Sphere() : Sphere(ResourceManager::GetInstance().GetShader(Configuration::defaultShader))
 {
 }
 

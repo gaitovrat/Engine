@@ -2,8 +2,9 @@
 
 #include "Resource/ResourceManager.hpp"
 #include "Raw/gift.hpp"
+#include "Configuration.hpp"
 
-Gift::Gift() : Gift(ResourceManager::GetInstance().GetShader("1"))
+Gift::Gift() : Gift(ResourceManager::GetInstance().GetShader(Configuration::defaultShader))
 {
 }
 

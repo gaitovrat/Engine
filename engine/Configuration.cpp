@@ -9,3 +9,5 @@ ELogLevel Configuration::logLevel = WARNING;
 #else
 ELogLevel Configuration::logLevel = DEBUG;
 #endif
+
+std::string Configuration::defaultShader = "lights";

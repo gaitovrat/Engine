@@ -2,8 +2,9 @@
 
 #include "Raw/plain.hpp"
 #include "Resource/ResourceManager.hpp"
+#include "Configuration.hpp"
 
-Plain::Plain() : Plain(ResourceManager::GetInstance().GetShader("1"))
+Plain::Plain() : Plain(ResourceManager::GetInstance().GetShader(Configuration::defaultShader))
 {
 }
 

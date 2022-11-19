@@ -1,9 +1,10 @@
 #pragma once
 
 #include "EObserverEvent.hpp"
+#include "ISubject.hpp"
 
 class IObserver
 {
 public:
-	virtual void Notify(EObserverEvent event) = 0;
+	virtual void Notify(EObserverEvent event, ISubject* source) = 0;
 };

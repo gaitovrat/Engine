@@ -2,8 +2,9 @@
 
 #include "Resource/ResourceManager.hpp"
 #include "Raw/suzi_flat.hpp"
+#include "Configuration.hpp"
 
-SuziFlat::SuziFlat() : SuziFlat(ResourceManager::GetInstance().GetShader("1"))
+SuziFlat::SuziFlat() : SuziFlat(ResourceManager::GetInstance().GetShader(Configuration::defaultShader))
 {
 }
 

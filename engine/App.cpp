@@ -1,18 +1,16 @@
 #include "App.hpp"
 
-#include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
 
 #include "Resource/ResourceManager.hpp"
 #include "Resource/Model/Sphere.hpp"
-#include "Resource/Model/SuziSmooth.hpp"
 #include "Resource/Model/SuziFlat.hpp"
-#include "Resource/Model/Tree.hpp"
-#include "Resource/Model/Gift.hpp"
 #include "KeyboardEvent/KeyboardEvent.hpp"
 #include "KeyboardEvent/EKey.hpp"
 #include "Configuration.hpp"
+#include "Light/PointLight.hpp"
+#include "Camera.hpp"
 
 App::App(const int width, const int height, const char *title) :
     m_window(width, height, title)
@@ -24,38 +22,16 @@ App::App(const int width, const int height, const char *title) :
 
     auto& scene = m_scenes.back();
 
-    for (int i = 0; i < 100; i++)
-    {
-	    constexpr auto distance = 3.f;
-	    DrawableObject* object(nullptr);
+    auto light = new PointLight;
+    light->SetPosition(glm::vec3(0, 3, 0));
+    scene.AddLight(light);
 
-        switch (i % 5)
-        {
-        case 0:
-            object = new Sphere();
-            break;
-        case 1:
-            object = new SuziSmooth();
-            break;
-        case 2:
-            object = new SuziFlat();
-            break;
-        case 3:
-            object = new Tree();
-            break;
-        default:
-            object = new Gift();
-            break;
-        }
+	light = new PointLight;
+	light->SetPosition(glm::vec3(-3, 0, 0));
+	scene.AddLight(light);
 
-		object->SetShader(ResourceManager::GetInstance().GetShader("lights"));
-        object->GetTransformation().AddTranslate(glm::vec3(i % 10 * distance, 0,
-                                                           static_cast<float>(static_cast<int>(i / 10.f)) * distance));
-
-        scene.AddObject(*object);
-        delete object;
-    }
-    scene.GetLight().SetPosition(glm::vec3(0, 6, -2));
+	const auto object = new SuziFlat;
+	scene.AddObject(object);
 }
 
 void App::Run()
@@ -67,9 +43,9 @@ void App::Run()
     {
         m_renderer.Clear();
 
-        for (auto& object : m_scenes[Configuration::level].GetObjects())
+        for (const auto& object : m_scenes[Configuration::level].GetObjects())
         {
-            m_renderer.Draw(object);
+            m_renderer.Draw(*object);
         }
 
         m_window.PollEvents();

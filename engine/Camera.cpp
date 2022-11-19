@@ -51,9 +51,9 @@ void Camera::MoveBackward(float speed)
 
 void Camera::NotifyAll(const EObserverEvent event)
 {
-	for (auto& observer : m_observers)
+	for (const auto& observer : m_observers)
 	{
-		observer->Notify(event);
+		observer->Notify(event, this);
 	}
 }
 

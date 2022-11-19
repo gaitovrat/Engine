@@ -3,26 +3,28 @@
 #include <vector>
 
 #include "Resource/DrawableObject.hpp"
-#include "Camera.hpp"
-#include "Light.hpp"
+#include "Light/AbstractLight.hpp"
 
 class Scene final
 {
 public:
-	void AddObject(DrawableObject& object);
+	void AddObject(DrawableObject* object);
 
-	void UpdateObjects();
+	~Scene();
 
-	std::vector<DrawableObject>& GetObjects();
+	void UpdateObjects() const;
 
-	DrawableObject& operator[](int index);
+	std::vector<DrawableObject*>& GetObjects();
 
-	Light& GetLight();
+	DrawableObject* operator[](int index) const;
+
+	std::vector<AbstractLight*>& GetLights();
+	void AddLight(AbstractLight* light);
 
 private:
-	void UpdateLastObject();
-	void UpdateObject(DrawableObject& object);
+	void UpdateLastObject() const;
+	void UpdateObject(DrawableObject* object) const;
 
-	std::vector<DrawableObject> m_objects;
-	Light m_light;
+	std::vector<DrawableObject*> m_objects;
+	std::vector<AbstractLight*> m_lights;
 };

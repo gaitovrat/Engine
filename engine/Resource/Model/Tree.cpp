@@ -2,8 +2,9 @@
 
 #include "Resource/ResourceManager.hpp"
 #include "Raw/tree.hpp"
+#include "Configuration.hpp"
 
-Tree::Tree() : Tree(ResourceManager::GetInstance().GetShader("1"))
+Tree::Tree() : Tree(ResourceManager::GetInstance().GetShader(Configuration::defaultShader))
 {
 }
 
