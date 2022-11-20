@@ -10,7 +10,7 @@
 #include "Camera.hpp"
 
 Shader::Shader() : m_id(0), m_modelId(0), m_modelMatrix(1.f), m_projectionId(0), m_projectionMatrix(1.f), m_viewId(0), m_viewMatrix(1.f),
-                   m_eyeId(0)
+                   m_eyeId(0), m_textureId(-1)
 {
 	m_id = glCreateProgram();
 
@@ -58,6 +58,7 @@ void Shader::Link()
 	m_projectionId = glGetUniformLocation(m_id, "projection");
 	m_viewId = glGetUniformLocation(m_id, "view");
 	m_eyeId = glGetUniformLocation(m_id, "eye");
+	m_textureId = glGetUniformLocation(m_id, "textureID");
 }
 
 void Shader::Activate() const
@@ -129,6 +130,7 @@ void Shader::UpdateUniforms() const
 	glUniformMatrix4fv(m_projectionId, 1, GL_FALSE, value_ptr(m_projectionMatrix));
 	glUniformMatrix4fv(m_modelId, 1, GL_FALSE, value_ptr(m_modelMatrix));
 	glUniform3fv(m_eyeId, 1, value_ptr(Camera::GetInstance().Eye()));
+	glUniform1i(m_textureId, 0);
 
 	UpdateLights(m_lights);
 }

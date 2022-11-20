@@ -12,12 +12,23 @@ ResourceManager::ResourceManager()
 	}
 }
 
+std::string ResourceManager::TextureName(const std::string& name)
+{
+	return "texture." + name;
+}
+
+std::string ResourceManager::ShaderName(const std::string& name)
+{
+	return "shader." + name;
+}
+
+std::string ResourceManager::DrawableObjectName(const std::string& name)
+{
+	return "object." + name;
+}
+
 ResourceManager::~ResourceManager()
 {
-	for (const auto& val : m_shaders | std::views::values)
-	{
-		delete val;
-	}
 }
 
 ResourceManager& ResourceManager::GetInstance()
@@ -29,23 +40,55 @@ ResourceManager& ResourceManager::GetInstance()
 
 void ResourceManager::AddShader(const std::string name)
 {
+	const auto shader = new Shader("assets/shader/" + name);
 
-	m_shaders[name] = new Shader("assets/shader/" + name);
-
-	Link(name);
+	shader->Link();
+	m_resources[ShaderName(name)] = shader;
 }
 
 Shader& ResourceManager::GetShader(const std::string name)
 {
-	return *m_shaders[name];
+	if (!m_resources.contains(ShaderName(name)))
+	{
+		AddShader(name);
+	}
+
+	return *dynamic_cast<Shader*>(m_resources[ShaderName(name)]);
 }
 
-std::map<std::string, Shader*>& ResourceManager::GetShaders()
+void ResourceManager::AddTexture(const std::string name)
 {
-	return m_shaders;
+	m_resources[TextureName(name)] = new Texture("assets/texture/" + name);
 }
 
-void ResourceManager::Link(const std::string name)
+Texture& ResourceManager::GetTexture(const std::string name)
 {
-	m_shaders[name]->Link();
+	if (!m_resources.contains(TextureName(name)))
+	{
+		AddTexture(name);
+	}
+
+	return *dynamic_cast<Texture*>(m_resources[TextureName(name)]);
+}
+
+DrawableObject& ResourceManager::GetDrawableObject(const std::string name, const std::string shaderName, const std::string textureName)
+{
+	auto& shader = GetShader(shaderName);
+	auto& texture = GetTexture(textureName);
+
+	if (!m_resources.contains(DrawableObjectName(name)))
+	{
+		AddDrawableObject(name, shaderName, textureName);
+	}
+
+	auto object = dynamic_cast<DrawableObject*>(m_resources[DrawableObjectName(name)]);
+	object->SetShader(shader);
+	object->SetTexture(texture);
+
+	return *object;
+}
+
+void ResourceManager::AddDrawableObject(const std::string name, const std::string shaderName, const std::string textureName)
+{
+	m_resources[DrawableObjectName(name)] = new DrawableObject("assets/mesh/" + name, GetShader(shaderName), GetTexture(textureName));
 }

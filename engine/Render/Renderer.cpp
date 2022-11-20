@@ -19,5 +19,5 @@ void Renderer::Draw(DrawableObject& object)
 {
 	object.Activate();
 
-	glDrawArrays(GL_TRIANGLES, 0, object.GetVertexCount());
+	glDrawElements(GL_TRIANGLES, object.GetVertexCount(), GL_UNSIGNED_INT, nullptr);
 }

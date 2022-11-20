@@ -12,9 +12,8 @@
 
 class Camera;
 
-class Shader final : public IObserver, IResource
+class Shader final : public IObserver, public IResource
 {
-private:
 	Shader();
 
 public:
@@ -56,6 +55,7 @@ private:
 	glm::mat4 m_viewMatrix;
 	std::vector<BaseShader> m_shaders;
 	int32_t m_eyeId;
+	int32_t m_textureId;
 
 	std::vector<AbstractLight*> m_lights;
 };

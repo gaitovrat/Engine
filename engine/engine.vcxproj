@@ -114,14 +114,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>.;../library/glew/include;../library/glfw/include;../library/glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../library/assimp/build/include;.;../library/glew/include;../library/glfw/include;../library/soil/inc;../library/glm;../library/assimp/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>../library/glfw/lib-vc2022;../library/glew/lib/Release/x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3dll.lib;glew32.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../library/assimp/build/lib/Debug;../library/glfw/lib-vc2022;../library/soil/lib;../library/glew/lib/Release/x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3dll.lib;glew32.lib;opengl32.lib;soil.lib;assimp-vc143-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -132,7 +132,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>.;../library/glew/include;../library/glfw/include;../library/glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../library/assimp/build/include;.;../library/glew/include;../library/glfw/include;../library/soil/inc;../library/glm;../library/assimp/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -140,8 +140,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>../library/glfw/lib-vc2022;../library/glew/lib/Release/x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3dll.lib;glew32.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../library/assimp/build/lib/Debug;../library/glfw/lib-vc2022;../library/soil/lib;../library/glew/lib/Release/x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3dll.lib;glew32.lib;opengl32.lib;soil.lib;assimp-vc143-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -170,15 +170,9 @@
     <ClCompile Include="Render\Shader\VertexShader.cpp" />
     <ClCompile Include="Render\VertexBuffer.cpp" />
     <ClCompile Include="Resource\DrawableObject.cpp" />
-    <ClCompile Include="Resource\Model\Bushes.cpp" />
-    <ClCompile Include="Resource\Model\Gift.cpp" />
-    <ClCompile Include="Resource\Model\Plain.cpp" />
-    <ClCompile Include="Resource\Model\Sphere.cpp" />
-    <ClCompile Include="Resource\Model\SuziFlat.cpp" />
-    <ClCompile Include="Resource\Model\SuziSmooth.cpp" />
-    <ClCompile Include="Resource\Model\Tree.cpp" />
     <ClCompile Include="Resource\ResourceManager.cpp" />
     <ClCompile Include="Resource\Shader.cpp" />
+    <ClCompile Include="Resource\Texture.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Transformation.cpp" />
     <ClCompile Include="Util\FileUtil.cpp" />
@@ -215,23 +209,10 @@
     <ClInclude Include="Render\Shader\EShaderType.hpp" />
     <ClInclude Include="Render\Shader\FragmentShader.hpp" />
     <ClInclude Include="Render\Shader\VertexShader.hpp" />
+    <ClInclude Include="Render\Vertex.hpp" />
     <ClInclude Include="Render\VertexBuffer.hpp" />
     <ClInclude Include="Resource\DrawableObject.hpp" />
     <ClInclude Include="Resource\IResource.hpp" />
-    <ClInclude Include="Resource\Model\Bushes.hpp" />
-    <ClInclude Include="Resource\Model\Gift.hpp" />
-    <ClInclude Include="Resource\Model\Plain.hpp" />
-    <ClInclude Include="Resource\Model\Raw\bushes.hpp" />
-    <ClInclude Include="Resource\Model\Raw\gift.hpp" />
-    <ClInclude Include="Resource\Model\Raw\plain.hpp" />
-    <ClInclude Include="Resource\Model\Raw\sphere.hpp" />
-    <ClInclude Include="Resource\Model\Raw\suzi_flat.hpp" />
-    <ClInclude Include="Resource\Model\Raw\suzi_smooth.hpp" />
-    <ClInclude Include="Resource\Model\Raw\tree.hpp" />
-    <ClInclude Include="Resource\Model\Sphere.hpp" />
-    <ClInclude Include="Resource\Model\SuziFlat.hpp" />
-    <ClInclude Include="Resource\Model\SuziSmooth.hpp" />
-    <ClInclude Include="Resource\Model\Tree.hpp" />
     <ClInclude Include="Resource\ResourceManager.hpp" />
     <ClInclude Include="Resource\Shader.hpp" />
     <ClInclude Include="Resource\Texture.hpp" />

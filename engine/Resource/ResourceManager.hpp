@@ -4,10 +4,19 @@
 #include <string>
 
 #include "Shader.hpp"
+#include "IResource.hpp"
+#include "Texture.hpp"
+#include "DrawableObject.hpp"
 
 class ResourceManager final
 {
 	ResourceManager();
+
+	static std::string TextureName(const std::string& name);
+
+	static std::string ShaderName(const std::string& name);
+
+	static std::string DrawableObjectName(const std::string& name);
 
 public:
 	~ResourceManager();
@@ -18,10 +27,14 @@ public:
 
 	Shader& GetShader(std::string name);
 
-	std::map<std::string, Shader*>& GetShaders();
+	void AddTexture(std::string name);
+
+	Texture& GetTexture(std::string name);
+
+	DrawableObject& GetDrawableObject(std::string name, std::string shaderName, std::string textureName);
+
+	void AddDrawableObject(std::string name, std::string shaderName, std::string textureName);
 
 private:
-	void Link(std::string name);
-
-	std::map<std::string, Shader*> m_shaders;
+	std::map<std::string, IResource*> m_resources;
 };

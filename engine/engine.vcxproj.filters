@@ -93,27 +93,6 @@
     <ClCompile Include="Resource\Shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Resource\Model\Bushes.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Resource\Model\Gift.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Resource\Model\Plain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Resource\Model\Sphere.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Resource\Model\SuziFlat.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Resource\Model\SuziSmooth.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Resource\Model\Tree.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Util\FileUtil.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -130,6 +109,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Light\SpotLight.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource\Texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -227,48 +209,6 @@
     <ClInclude Include="Resource\Shader.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Resource\Model\Bushes.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource\Model\Gift.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource\Model\Plain.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource\Model\Sphere.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource\Model\SuziFlat.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource\Model\SuziSmooth.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource\Model\Tree.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource\Model\Raw\bushes.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource\Model\Raw\gift.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource\Model\Raw\plain.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource\Model\Raw\sphere.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource\Model\Raw\suzi_flat.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource\Model\Raw\suzi_smooth.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource\Model\Raw\tree.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Util\FileUtil.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -294,6 +234,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Resource\IResource.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\Vertex.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -4,15 +4,9 @@
 #include <iostream>
 
 #include "Resource/ResourceManager.hpp"
-#include "Resource/Model/Sphere.hpp"
-#include "Resource/Model/SuziFlat.hpp"
 #include "KeyboardEvent/KeyboardEvent.hpp"
 #include "KeyboardEvent/EKey.hpp"
 #include "Configuration.hpp"
-#include "Light/DirectionalLight.hpp"
-#include "Light/PointLight.hpp"
-#include "Light/SpotLight.hpp"
-#include "Light/AbstractLight.hpp"
 #include "Camera.hpp"
 
 App::App(const int width, const int height, const char *title) :
@@ -24,24 +18,9 @@ App::App(const int width, const int height, const char *title) :
 	m_scenes.emplace_back();
 
     auto& scene = m_scenes.back();
+	auto& object = ResourceManager::GetInstance().GetDrawableObject("box.obj", "texture", "box.jpg");
 
-    AbstractLight* light = new DirectionalLight;
-    light->SetPosition(glm::vec3(-3, 0, 0));
-    scene.AddLight(light);
-
-	auto object = new SuziFlat;
-	scene.AddObject(object);
-
-	object = new SuziFlat;
-	object->GetTransformation().AddTranslate(glm::vec3(5.f, .0f, .0f));
-	scene.AddObject(object);
-
-	light = new PointLight;
-	light->SetPosition(glm::vec3(5.f, 3.f, 0.f));
-	scene.AddLight(light);
-
-	light = new SpotLight;
-	scene.AddLight(light);
+	scene.AddObject(&object);
 }
 
 void App::Run()
