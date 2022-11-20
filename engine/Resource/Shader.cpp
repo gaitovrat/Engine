@@ -28,8 +28,12 @@ Shader::Shader(const VertexShader& vertexShader, const FragmentShader& fragmentS
 
 Shader::Shader(const char* vertexShaderSource, const char* fragmentShaderSource) : Shader()
 {
-	m_shaders.emplace_back(vertexShaderSource, VERTEX);
-	m_shaders.emplace_back(fragmentShaderSource, FRAGMENT);
+	Init(vertexShaderSource, fragmentShaderSource);
+}
+
+Shader::Shader(const std::string filepath) : Shader()
+{
+	Load(filepath);
 }
 
 void Shader::Link()
@@ -76,6 +80,12 @@ void Shader::SetProjectionMatrix(const int width, const int height)
 	m_projectionMatrix = glm::perspective(glm::radians(45.0f), float(width) / float(height), 0.1f, 100.0f);
 }
 
+void Shader::Init(const char* vertexShaderSource, const char* fragmentShaderSource)
+{
+	m_shaders.emplace_back(vertexShaderSource, VERTEX);
+	m_shaders.emplace_back(fragmentShaderSource, FRAGMENT);
+}
+
 void Shader::UpdateLights(const std::vector<AbstractLight*>& lights) const
 {
 	for (const auto& light : lights)
@@ -115,10 +125,10 @@ void Shader::UpdateLight(const AbstractLight* light, const uint64_t index) const
 
 void Shader::UpdateUniforms() const
 {
-	glUniformMatrix4fv(m_viewId, 1, GL_FALSE, glm::value_ptr(m_viewMatrix));
-	glUniformMatrix4fv(m_projectionId, 1, GL_FALSE, glm::value_ptr(m_projectionMatrix));
-	glUniformMatrix4fv(m_modelId, 1, GL_FALSE, glm::value_ptr(m_modelMatrix));
-	glUniform3fv(m_eyeId, 1, glm::value_ptr(Camera::GetInstance().Eye()));
+	glUniformMatrix4fv(m_viewId, 1, GL_FALSE, value_ptr(m_viewMatrix));
+	glUniformMatrix4fv(m_projectionId, 1, GL_FALSE, value_ptr(m_projectionMatrix));
+	glUniformMatrix4fv(m_modelId, 1, GL_FALSE, value_ptr(m_modelMatrix));
+	glUniform3fv(m_eyeId, 1, value_ptr(Camera::GetInstance().Eye()));
 
 	UpdateLights(m_lights);
 }
@@ -148,4 +158,14 @@ void Shader::Notify(const EObserverEvent event, ISubject* source)
 			UpdateLight(light, light->Id());
 			break;
     }
+}
+
+void Shader::Load(std::string filepath)
+{
+	const std::string vertex = filepath + ".vert";
+	const std::string fragment = filepath + ".frag";
+	const char* cVertex = vertex.c_str();
+	const char* cFragment = fragment.c_str();
+
+	Init(cVertex, cFragment);
 }

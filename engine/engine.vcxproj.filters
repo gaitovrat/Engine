@@ -275,9 +275,6 @@
     <ClInclude Include="Util\ShaderUtil.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Log\ELogLevel.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Log\Log.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -291,6 +288,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Light\SpotLight.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource\Texture.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource\IResource.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

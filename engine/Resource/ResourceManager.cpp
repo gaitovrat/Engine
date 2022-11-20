@@ -29,14 +29,8 @@ ResourceManager& ResourceManager::GetInstance()
 
 void ResourceManager::AddShader(const std::string name)
 {
-	const std::string nameDirectory = "assets/" + name;
-	const std::string vertex = nameDirectory + ".vert";
-	const std::string fragment = nameDirectory + ".frag";
 
-	const char* cVertex = vertex.c_str();
-	const char* cFragment = fragment.c_str();
-
-	m_shaders[name] = new Shader(cVertex, cFragment);
+	m_shaders[name] = new Shader("assets/shader/" + name);
 
 	Link(name);
 }

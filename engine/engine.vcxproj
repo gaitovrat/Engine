@@ -52,7 +52,7 @@
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
-    <EnableASAN>true</EnableASAN>
+    <EnableASAN>false</EnableASAN>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -202,7 +202,6 @@
     <ClInclude Include="Light\ELightType.hpp" />
     <ClInclude Include="Light\PointLight.hpp" />
     <ClInclude Include="Light\SpotLight.hpp" />
-    <ClInclude Include="Log\ELogLevel.hpp" />
     <ClInclude Include="Log\Log.hpp" />
     <ClInclude Include="Matrix\AbstractMatrixComponent.hpp" />
     <ClInclude Include="Matrix\RotateMatrixComponent.hpp" />
@@ -218,6 +217,7 @@
     <ClInclude Include="Render\Shader\VertexShader.hpp" />
     <ClInclude Include="Render\VertexBuffer.hpp" />
     <ClInclude Include="Resource\DrawableObject.hpp" />
+    <ClInclude Include="Resource\IResource.hpp" />
     <ClInclude Include="Resource\Model\Bushes.hpp" />
     <ClInclude Include="Resource\Model\Gift.hpp" />
     <ClInclude Include="Resource\Model\Plain.hpp" />
@@ -234,6 +234,7 @@
     <ClInclude Include="Resource\Model\Tree.hpp" />
     <ClInclude Include="Resource\ResourceManager.hpp" />
     <ClInclude Include="Resource\Shader.hpp" />
+    <ClInclude Include="Resource\Texture.hpp" />
     <ClInclude Include="Scene.hpp" />
     <ClInclude Include="Transformation.hpp" />
     <ClInclude Include="Util\FileUtil.hpp" />

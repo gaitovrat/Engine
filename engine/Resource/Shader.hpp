@@ -8,10 +8,11 @@
 #include "Render/Shader/FragmentShader.hpp"
 #include "Observer/IObserver.hpp"
 #include "Light/AbstractLight.hpp"
+#include "IResource.hpp"
 
 class Camera;
 
-class Shader final : public IObserver
+class Shader final : public IObserver, IResource
 {
 private:
 	Shader();
@@ -21,7 +22,7 @@ public:
 
 	Shader(const char* vertexShaderSource, const char* fragmentShaderSource);
 
-	Shader(const VertexShader& vertexShader, const FragmentShader& fragmentShader, AbstractLight& light);
+	explicit Shader(std::string filepath);
 
 	void Link();
 
@@ -39,8 +40,12 @@ public:
 
 	void Notify(EObserverEvent event, ISubject* source) override;
 
+	void Load(std::string filepath) override;
+
 private:
 	void SetProjectionMatrix(int width, int height);
+
+	void Init(const char* vertexShaderSource, const char* fragmentShaderSource);
 
 	int32_t m_id;
 	int32_t m_modelId;
