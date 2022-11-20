@@ -1,5 +1,10 @@
 #include "Scene.hpp"
 
+Scene::Scene()
+{
+	m_skydome.GetTransformation().AddScale(glm::vec3(2, 2, 2));
+}
+
 void Scene::AddObject(DrawableObject* object)
 {
 	if (object == nullptr)
@@ -71,7 +76,7 @@ void Scene::AddLight(AbstractLight* light)
 	UpdateObjects();
 }
 
-SkyBox& Scene::GetSkyBox()
+Skydome& Scene::GetSkydome()
 {
-	return m_skyBox;
+	return m_skydome;
 }

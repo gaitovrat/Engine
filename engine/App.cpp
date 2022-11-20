@@ -35,7 +35,7 @@ void App::Run()
         {
             m_renderer.Draw(*object);
         }
-		m_renderer.Draw(m_scenes[Configuration::level].GetSkyBox());
+		m_renderer.Draw(m_scenes[Configuration::level].GetSkydome());
 
         m_window.PollEvents();
         m_window.SwapBuffers();

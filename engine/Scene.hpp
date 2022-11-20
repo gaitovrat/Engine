@@ -4,11 +4,13 @@
 
 #include "Resource/DrawableObject.hpp"
 #include "Light/AbstractLight.hpp"
-#include "Resource/SkyBox.hpp"
+#include "Resource/Skydome.hpp"
 
 class Scene final
 {
 public:
+	Scene();
+
 	void AddObject(DrawableObject* object);
 
 	~Scene();
@@ -22,7 +24,7 @@ public:
 	std::vector<AbstractLight*>& GetLights();
 	void AddLight(AbstractLight* light);
 
-	[[nodiscard]] SkyBox& GetSkyBox();
+	[[nodiscard]] Skydome& GetSkydome();
 
 private:
 	void UpdateLastObject() const;
@@ -30,5 +32,5 @@ private:
 
 	std::vector<DrawableObject*> m_objects;
 	std::vector<AbstractLight*> m_lights;
-	SkyBox m_skyBox;
+	Skydome m_skydome;
 };
