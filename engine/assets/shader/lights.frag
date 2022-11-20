@@ -29,8 +29,11 @@ out vec4 frag_colour;
 
 in vec3 ex_worldNormal;
 in vec4 ex_worldPosition;
+in vec2 ex_textureCoordinates;
+in vec3 ex_tangent;
 
 uniform vec3 eye;
+uniform sampler2D textureID;
 
 uniform Light lights[MAX_LIGHTS];
 uniform int lightsSize;
@@ -134,15 +137,15 @@ void main ()
     {
         if (lights[i].lightType == DIRECTIONAL_LIGHT) 
         {
-            result += calculateDirectionalLight(viewVector, color, lights[i]);
+            result += calculateDirectionalLight(viewVector, vec3(texture(textureID, ex_textureCoordinates)), lights[i]);
         } 
         else if (lights[i].lightType == POINT_LIGHT)
         {
-            result += calculatePointLight(viewVector, color, lights[i]);
+            result += calculatePointLight(viewVector, vec3(texture(textureID, ex_textureCoordinates)), lights[i]);
         } 
         else
         {
-            result += calculateSpotLight(viewVector, color, lights[i]);
+            result += calculateSpotLight(viewVector, vec3(texture(textureID, ex_textureCoordinates)), lights[i]);
         }
     }
 

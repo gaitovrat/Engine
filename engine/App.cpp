@@ -7,6 +7,7 @@
 #include "KeyboardEvent/KeyboardEvent.hpp"
 #include "KeyboardEvent/EKey.hpp"
 #include "Configuration.hpp"
+#include "Light/SpotLight.hpp"
 #include "Camera.hpp"
 
 App::App(const int width, const int height, const char *title) :
@@ -18,9 +19,10 @@ App::App(const int width, const int height, const char *title) :
 	m_scenes.emplace_back();
 
     auto& scene = m_scenes.back();
-	auto& object = ResourceManager::GetInstance().GetDrawableObject("box.obj", "texture", "box.jpg");
+	auto& object = ResourceManager::GetInstance().GetDrawableObject("box.obj", "lights", "box.jpg");
 
 	scene.AddObject(&object);
+	scene.AddLight(new SpotLight);
 }
 
 void App::Run()
