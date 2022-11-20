@@ -172,6 +172,7 @@
     <ClCompile Include="Resource\DrawableObject.cpp" />
     <ClCompile Include="Resource\ResourceManager.cpp" />
     <ClCompile Include="Resource\Shader.cpp" />
+    <ClCompile Include="Resource\SkyBox.cpp" />
     <ClCompile Include="Resource\Texture.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Transformation.cpp" />
@@ -215,6 +216,7 @@
     <ClInclude Include="Resource\IResource.hpp" />
     <ClInclude Include="Resource\ResourceManager.hpp" />
     <ClInclude Include="Resource\Shader.hpp" />
+    <ClInclude Include="Resource\SkyBox.hpp" />
     <ClInclude Include="Resource\Texture.hpp" />
     <ClInclude Include="Scene.hpp" />
     <ClInclude Include="Transformation.hpp" />

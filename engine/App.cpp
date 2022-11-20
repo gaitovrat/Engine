@@ -31,11 +31,11 @@ void App::Run()
     while (m_window.ShoudlClose() == false)
     {
         m_renderer.Clear();
-
         for (const auto& object : m_scenes[Configuration::level].GetObjects())
         {
             m_renderer.Draw(*object);
         }
+		m_renderer.Draw(m_scenes[Configuration::level].GetSkyBox());
 
         m_window.PollEvents();
         m_window.SwapBuffers();

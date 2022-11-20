@@ -3,7 +3,6 @@
 #include <GL/glew.h>
 
 #include "Resource/DrawableObject.hpp"
-#include "Resource/Shader.hpp"
 
 Renderer::Renderer()
 {
@@ -18,6 +17,13 @@ void Renderer::Clear()
 void Renderer::Draw(DrawableObject& object)
 {
 	object.Activate();
-
 	glDrawElements(GL_TRIANGLES, object.GetVertexCount(), GL_UNSIGNED_INT, nullptr);
+}
+
+void Renderer::Draw(SkyBox& skyBox)
+{
+	glDepthFunc(GL_LEQUAL);
+	skyBox.Activate();
+	glDrawElements(GL_TRIANGLES, skyBox.GetVertexCount(), GL_UNSIGNED_INT, nullptr);
+	glDepthFunc(GL_LESS);
 }

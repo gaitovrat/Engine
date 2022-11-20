@@ -12,12 +12,12 @@
 
 class DrawableObject : public IResource
 {
-	DrawableObject(Shader& shader, Texture& texture);
+	DrawableObject(Shader& shader, Texture* texture);
 
 public:
-	DrawableObject(const std::vector<Vertex>& vertecies, Shader& shader, Texture& texture);
+	DrawableObject(const std::vector<Vertex>& vertecies, Shader& shader, Texture* texture);
 
-	DrawableObject(std::string filepath, Shader& shader, Texture& texture);
+	DrawableObject(std::string filepath, Shader& shader, Texture* texture);
 	
 	virtual ~DrawableObject() = default;
 

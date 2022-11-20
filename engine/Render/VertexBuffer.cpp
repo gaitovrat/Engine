@@ -40,8 +40,8 @@ void VertexBuffer::Init()
 
 void VertexBuffer::Bind() const
 {
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibo);
 	glBindVertexArray(m_vao);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibo);
 }
 
 void VertexBuffer::SetData(const std::vector<Vertex>& vertices)

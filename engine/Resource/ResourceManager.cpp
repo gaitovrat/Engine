@@ -27,10 +27,6 @@ std::string ResourceManager::DrawableObjectName(const std::string& name)
 	return "object." + name;
 }
 
-ResourceManager::~ResourceManager()
-{
-}
-
 ResourceManager& ResourceManager::GetInstance()
 {
 	static ResourceManager instance;
@@ -90,5 +86,5 @@ DrawableObject& ResourceManager::GetDrawableObject(const std::string name, const
 
 void ResourceManager::AddDrawableObject(const std::string name, const std::string shaderName, const std::string textureName)
 {
-	m_resources[DrawableObjectName(name)] = new DrawableObject("assets/mesh/" + name, GetShader(shaderName), GetTexture(textureName));
+	m_resources[DrawableObjectName(name)] = new DrawableObject("assets/mesh/" + name, GetShader(shaderName), &GetTexture(textureName));
 }

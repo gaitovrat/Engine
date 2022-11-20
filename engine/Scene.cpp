@@ -70,3 +70,8 @@ void Scene::AddLight(AbstractLight* light)
 	m_lights.push_back(light);
 	UpdateObjects();
 }
+
+SkyBox& Scene::GetSkyBox()
+{
+	return m_skyBox;
+}

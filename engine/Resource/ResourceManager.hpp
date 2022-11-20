@@ -19,7 +19,6 @@ class ResourceManager final
 	static std::string DrawableObjectName(const std::string& name);
 
 public:
-	~ResourceManager();
 
 	static ResourceManager& GetInstance();
 

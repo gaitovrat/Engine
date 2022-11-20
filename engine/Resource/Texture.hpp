@@ -8,6 +8,7 @@ class Texture final : public IResource
 
 public:
 	explicit Texture(std::string filepath);
+	Texture(std::string x, std::string y, std::string z, std::string negx, std::string negy, std::string negz);
 
 	void Load(std::string filepath) override;
 
@@ -15,5 +16,6 @@ public:
 
 	virtual ~Texture() = default;
 private:
-	uint32_t m_id;	
+	uint32_t m_textureId;
+	bool m_isCubeMap;
 };

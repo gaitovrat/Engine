@@ -6,16 +6,16 @@
 
 #include "ResourceManager.hpp"
 
-DrawableObject::DrawableObject(Shader& shader, Texture& texture) : DrawableObject(std::vector<Vertex>(), shader, texture)
+DrawableObject::DrawableObject(Shader& shader, Texture* texture) : DrawableObject(std::vector<Vertex>(), shader, texture)
 {
 }
 
-DrawableObject::DrawableObject(const std::vector<Vertex>& vertecies, Shader& shader, Texture& texture) :
-	m_vertexCount(vertecies.size()), m_vertexBuffer(vertecies), m_shader(&shader), m_texture(&texture)
+DrawableObject::DrawableObject(const std::vector<Vertex>& vertecies, Shader& shader, Texture* texture) :
+	m_vertexCount(vertecies.size()), m_vertexBuffer(vertecies), m_shader(&shader), m_texture(texture)
 {
 }
 
-DrawableObject::DrawableObject(std::string filepath, Shader& shader, Texture& texture) : DrawableObject(shader, texture)
+DrawableObject::DrawableObject(std::string filepath, Shader& shader, Texture* texture) : DrawableObject(shader, texture)
 {
     Load(filepath);
 }
@@ -23,11 +23,11 @@ DrawableObject::DrawableObject(std::string filepath, Shader& shader, Texture& te
 void DrawableObject::Activate()
 {
     m_shader->Activate();
-	m_transformation.Activate();
     m_shader->SetModelMatrix(m_transformation.GetMatrix());
-    m_texture->Bind();
+	m_transformation.Activate();
     m_shader->UpdateUniforms();
     m_vertexBuffer.Bind();
+    m_texture->Bind();
 }
 
 uint32_t DrawableObject::GetVertexCount() const
