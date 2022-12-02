@@ -4,13 +4,14 @@
 
 class Texture final : public IResource
 {
+public:
 	Texture();
 
-public:
 	explicit Texture(std::string filepath);
+
 	Texture(std::string x, std::string y, std::string z, std::string negx, std::string negy, std::string negz);
 
-	void Load(std::string filepath) override;
+	void Load(const std::string& filepath) override;
 
 	void Bind() const;
 

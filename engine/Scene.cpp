@@ -5,73 +5,54 @@ Scene::Scene()
 	m_skydome.GetTransformation().AddScale(glm::vec3(2, 2, 2));
 }
 
-void Scene::AddObject(DrawableObject* object)
+void Scene::AddObject(const DrawableObject& object)
 {
-	if (object == nullptr)
-		return;
-
 	m_objects.push_back(object);
 
 	UpdateLastObject();
 }
 
-Scene::~Scene()
+void Scene::UpdateObjects()
 {
-	for (const auto& light : m_lights)
-	{
-		delete light;
-	}
-
-	for (const auto& object : m_objects)
-	{
-		delete object;
-	}
-}
-
-void Scene::UpdateObjects() const
-{
-	for (const auto& object : m_objects)
+	for (auto& object : m_objects)
 	{
 		UpdateObject(object);
 	}
 }
 
-void Scene::UpdateLastObject() const
+void Scene::UpdateLastObject()
 {
 	UpdateObject(m_objects.back());
 }
 
-void Scene::UpdateObject(DrawableObject* object) const
+void Scene::UpdateObject(DrawableObject& object)
 {
-	auto& shader = object->GetShader();
-	shader.SetLights(m_lights);
+	auto shader = object.GetShader();
+	shader->SetLights(m_lights);
 
 	for (const auto& light : m_lights)
 	{
-		light->AddObserver(&shader);
+		light->AddObserver(shader);
 	}
 }
 
-std::vector<DrawableObject*>& Scene::GetObjects()
+std::vector<DrawableObject>& Scene::GetObjects()
 {
 	return m_objects;
 }
 
-DrawableObject* Scene::operator[](const int index) const
+DrawableObject& Scene::operator[](const int index)
 {
 	return m_objects[index];
 }
 
-std::vector<AbstractLight*>& Scene::GetLights()
+std::vector<std::shared_ptr<AbstractLight>>& Scene::GetLights()
 {
 	return m_lights;
 }
 
-void Scene::AddLight(AbstractLight* light)
+void Scene::AddLight(const std::shared_ptr<AbstractLight>& light)
 {
-	if (light == nullptr)
-		return;
-
 	m_lights.push_back(light);
 	UpdateObjects();
 }

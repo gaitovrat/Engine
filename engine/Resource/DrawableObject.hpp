@@ -12,12 +12,14 @@
 
 class DrawableObject : public IResource
 {
-	DrawableObject(Shader& shader, Texture* texture);
+	DrawableObject(const std::shared_ptr<Shader> shader, const Texture& texture);
 
 public:
-	DrawableObject(const std::vector<Vertex>& vertecies, Shader& shader, Texture* texture);
+	DrawableObject();
 
-	DrawableObject(std::string filepath, Shader& shader, Texture* texture);
+	DrawableObject(const std::vector<Vertex>& vertecies, const std::shared_ptr<Shader> shader, const Texture& texture);
+
+	DrawableObject(const std::string& filepath, const std::shared_ptr<Shader> shader, const Texture& texture);
 	
 	virtual ~DrawableObject() = default;
 
@@ -27,20 +29,24 @@ public:
 
 	Transformation& GetTransformation();
 
-	[[nodiscard]] Shader& GetShader() const;
+	[[nodiscard]] std::shared_ptr<Shader> GetShader();
 
-	[[nodiscard]] Texture& GetTexture() const;
+	[[nodiscard]] const std::shared_ptr<Shader> GetCShader() const;
 
-	void SetShader(Shader& shader);
+	[[nodiscard]] Texture& GetTexture();
 
-	void SetTexture(Texture& texture);
+	[[nodiscard]] const Texture& GetCTexture() const;
 
-	void Load(std::string filepath) override;
+	void SetShader(const std::shared_ptr<Shader> shader);
+
+	void SetTexture(const Texture& texture);
+
+	void Load(const std::string& filepath) override;
 
 private:
 	uint32_t m_vertexCount;
 	VertexBuffer m_vertexBuffer;
 	Transformation m_transformation;
-    Shader* m_shader;
-	Texture* m_texture;
+    std::shared_ptr<Shader> m_shader;
+	Texture m_texture;
 };

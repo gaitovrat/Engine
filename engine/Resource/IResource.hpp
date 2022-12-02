@@ -4,5 +4,5 @@
 
 struct IResource
 {
-	virtual void Load(std::string filepath) = 0;
+	virtual void Load(const std::string& filepath) = 0;
 };

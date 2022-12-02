@@ -5,7 +5,7 @@
 SkyBox::SkyBox() :
 	DrawableObject("assets/mesh/skybox.obj", 
 		ResourceManager::GetInstance().GetShader("skybox"), 
-		new Texture(
+		Texture(
 			"assets/texture/skybox/posx.jpg",
 			"assets/texture/skybox/posy.jpg",
 			"assets/texture/skybox/posz.jpg",

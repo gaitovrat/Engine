@@ -152,7 +152,7 @@ uint64_t AbstractLight::Id() const
     return m_id;
 }
 
-void AbstractLight::AddObserver(IObserver* observer)
+void AbstractLight::AddObserver(const std::shared_ptr<IObserver>& observer)
 {
     for (const auto& element : m_observers)
     {

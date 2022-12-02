@@ -14,9 +14,9 @@ class Camera;
 
 class Shader final : public IObserver, public IResource
 {
+public:
 	Shader();
 
-public:
 	Shader(const VertexShader& vertexShader, const FragmentShader& fragmentShader);
 
 	Shader(const char* vertexShaderSource, const char* fragmentShaderSource);
@@ -29,17 +29,17 @@ public:
 
 	void SetModelMatrix(const glm::mat4 modelMatrix);
 
-	void SetLights(const std::vector<AbstractLight*>& lights);
+	void SetLights(const std::vector<std::shared_ptr<AbstractLight>>& lights);
 
-	void UpdateLights(const std::vector<AbstractLight*>& lights) const;
+	void UpdateLights(const std::vector<std::shared_ptr<AbstractLight>>& lights) const;
 
-	void UpdateLight(const AbstractLight* light, uint64_t index) const;
+	void UpdateLight(const std::shared_ptr<AbstractLight>& light, uint64_t index) const;
 
 	void UpdateUniforms() const;
 
 	void Notify(EObserverEvent event, ISubject* source) override;
 
-	void Load(std::string filepath) override;
+	void Load(const std::string& filepath) override;
 
 private:
 	void SetProjectionMatrix(int width, int height);
@@ -57,5 +57,5 @@ private:
 	int32_t m_eyeId;
 	int32_t m_textureId;
 
-	std::vector<AbstractLight*> m_lights;
+	std::vector<std::shared_ptr<AbstractLight>> m_lights;
 };

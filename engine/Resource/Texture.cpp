@@ -28,7 +28,7 @@ Texture::Texture(std::string x, std::string y, std::string z, std::string negx, 
 	m_isCubeMap = true;
 }
 
-void Texture::Load(std::string filepath)
+void Texture::Load(const std::string& filepath)
 {
 	m_textureId = SOIL_load_OGL_texture(filepath.c_str(), SOIL_LOAD_RGBA, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
 }

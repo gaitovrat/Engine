@@ -2,6 +2,7 @@
 
 #include <glm/glm.hpp>
 #include <vector>
+#include <memory>
 
 #include "Observer/ISubject.hpp"
 #include "ELightType.hpp"
@@ -54,7 +55,7 @@ public:
 
 	[[nodiscard]] virtual ELightType Type() const = 0;
 
-	void AddObserver(IObserver* observer) override;
+	void AddObserver(const std::shared_ptr<IObserver>& observer) override;
 
 	void NotifyAll(EObserverEvent event) override;
 
@@ -71,7 +72,7 @@ public:
 	void SetOuterCutOff(float outerCutOff);
 
 private:
-	std::vector<IObserver*> m_observers;
+	std::vector<std::shared_ptr<IObserver>> m_observers;
 
 	glm::vec3 m_position;
 	glm::vec3 m_direction;

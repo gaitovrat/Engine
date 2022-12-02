@@ -24,16 +24,16 @@ public:
 
 	void AddShader(std::string name);
 
-	Shader& GetShader(std::string name);
+	std::shared_ptr<Shader> GetShader(std::string name);
 
 	void AddTexture(std::string name);
 
-	Texture& GetTexture(std::string name);
+	std::shared_ptr<Texture> GetTexture(std::string name);
 
-	DrawableObject& GetDrawableObject(std::string name, std::string shaderName, std::string textureName);
+	std::shared_ptr<DrawableObject> GetDrawableObject(std::string name, std::string shaderName, std::string textureName);
 
 	void AddDrawableObject(std::string name, std::string shaderName, std::string textureName);
 
 private:
-	std::map<std::string, IResource*> m_resources;
+	std::map<std::string, std::shared_ptr<IResource>> m_resources;
 };

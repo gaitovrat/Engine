@@ -57,7 +57,7 @@ void Camera::NotifyAll(const EObserverEvent event)
 	}
 }
 
-void Camera::AddObserver(IObserver* observer)
+void Camera::AddObserver(const std::shared_ptr<IObserver>& observer)
 {
     m_observers.push_back(observer);
 }

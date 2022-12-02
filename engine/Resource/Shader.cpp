@@ -4,6 +4,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <iostream>
 #include <glm/gtx/string_cast.hpp>
+#include <memory>
 
 #include "Exception/GLException.hpp"
 
@@ -15,7 +16,7 @@ Shader::Shader() : m_id(0), m_modelId(0), m_modelMatrix(1.f), m_projectionId(0),
 	m_id = glCreateProgram();
 
 	auto& camera = Camera::GetInstance();
-    camera.AddObserver(this);
+    camera.AddObserver(std::shared_ptr<Shader>(this));
 	m_viewMatrix = camera.ToMatrix();
 	SetProjectionMatrix(camera.Width(), camera.Height());
 }
@@ -71,7 +72,7 @@ void Shader::SetModelMatrix(const glm::mat4 modelMatrix)
 	m_modelMatrix = modelMatrix;
 }
 
-void Shader::SetLights(const std::vector<AbstractLight*>& lights)
+void Shader::SetLights(const std::vector<std::shared_ptr<AbstractLight>>& lights)
 {
 	m_lights = lights;
 }
@@ -87,7 +88,7 @@ void Shader::Init(const char* vertexShaderSource, const char* fragmentShaderSour
 	m_shaders.emplace_back(fragmentShaderSource, FRAGMENT);
 }
 
-void Shader::UpdateLights(const std::vector<AbstractLight*>& lights) const
+void Shader::UpdateLights(const std::vector<std::shared_ptr<AbstractLight>>& lights) const
 {
 	for (const auto& light : lights)
 	{
@@ -95,7 +96,7 @@ void Shader::UpdateLights(const std::vector<AbstractLight*>& lights) const
 	}
 }
 
-void Shader::UpdateLight(const AbstractLight* light, const uint64_t index) const
+void Shader::UpdateLight(const std::shared_ptr<AbstractLight>& light, const uint64_t index) const
 {
 	const auto position = glGetUniformLocation(m_id, ("lights[" + std::to_string(index) + "].position").c_str());
 	const auto direction = glGetUniformLocation(m_id, ("lights[" + std::to_string(index) + "].direction").c_str());
@@ -157,12 +158,12 @@ void Shader::Notify(const EObserverEvent event, ISubject* source)
             break;
 		case LIGHT_POSITION_CHANGED:
 			const auto light = dynamic_cast<AbstractLight*>(source);
-			UpdateLight(light, light->Id());
+			UpdateLight(std::shared_ptr<AbstractLight>(light), light->Id());
 			break;
     }
 }
 
-void Shader::Load(std::string filepath)
+void Shader::Load(const std::string& filepath)
 {
 	const std::string vertex = filepath + ".vert";
 	const std::string fragment = filepath + ".frag";

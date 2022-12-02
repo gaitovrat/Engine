@@ -19,10 +19,10 @@ App::App(const int width, const int height, const char *title) :
 	m_scenes.emplace_back();
 
     auto& scene = m_scenes.back();
-	auto& object = ResourceManager::GetInstance().GetDrawableObject("box.obj", "lights", "box.jpg");
+	auto object = ResourceManager::GetInstance().GetDrawableObject("box.obj", "lights", "box.jpg");
 
-	scene.AddObject(&object);
-	scene.AddLight(new SpotLight);
+	scene.AddObject(*object);
+	scene.AddLight(std::make_shared<SpotLight>());
 }
 
 void App::Run()
@@ -33,9 +33,9 @@ void App::Run()
     while (m_window.ShoudlClose() == false)
     {
         m_renderer.Clear();
-        for (const auto& object : m_scenes[Configuration::level].GetObjects())
+        for (auto& object : m_scenes[Configuration::level].GetObjects())
         {
-            m_renderer.Draw(*object);
+            m_renderer.Draw(object);
         }
 		m_renderer.Draw(m_scenes[Configuration::level].GetSkydome());
 

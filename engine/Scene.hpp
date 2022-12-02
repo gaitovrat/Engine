@@ -11,26 +11,28 @@ class Scene final
 public:
 	Scene();
 
-	void AddObject(DrawableObject* object);
+	void AddObject(const DrawableObject& object);
 
-	~Scene();
+	~Scene() = default;
 
-	void UpdateObjects() const;
+	void UpdateObjects();
 
-	std::vector<DrawableObject*>& GetObjects();
+	std::vector<DrawableObject>& GetObjects();
 
-	DrawableObject* operator[](int index) const;
+	DrawableObject& operator[](int index);
 
-	std::vector<AbstractLight*>& GetLights();
-	void AddLight(AbstractLight* light);
+	std::vector<std::shared_ptr<AbstractLight>>& GetLights();
+
+	void AddLight(const std::shared_ptr<AbstractLight>& light);
 
 	[[nodiscard]] Skydome& GetSkydome();
 
 private:
-	void UpdateLastObject() const;
-	void UpdateObject(DrawableObject* object) const;
+	void UpdateLastObject();
 
-	std::vector<DrawableObject*> m_objects;
-	std::vector<AbstractLight*> m_lights;
+	void UpdateObject(DrawableObject& object);
+
+	std::vector<DrawableObject> m_objects;
+	std::vector<std::shared_ptr<AbstractLight>> m_lights;
 	Skydome m_skydome;
 };

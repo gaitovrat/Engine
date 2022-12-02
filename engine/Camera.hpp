@@ -2,6 +2,7 @@
 
 #include <glm/glm.hpp>
 #include <vector>
+#include <memory>
 
 #include "Resource/Shader.hpp"
 #include "Observer/ISubject.hpp"
@@ -10,10 +11,9 @@
 
 class Camera final : public ISubject
 {
-private:
+public:
 	Camera();
 
-public:
 	static Camera& GetInstance();
 
 	glm::mat4 ToMatrix() const;
@@ -28,7 +28,7 @@ public:
 
 	void NotifyAll(EObserverEvent event) override;
 
-	void AddObserver(IObserver* observer) override;
+	void AddObserver(const std::shared_ptr<IObserver>& observer) override;
 
 	void Rotate(double x, double y);
 
@@ -48,7 +48,7 @@ private:
 	glm::vec3 m_target;
 	glm::vec3 m_up;
 
-	std::vector<IObserver*> m_observers;
+	std::vector<std::shared_ptr<IObserver>> m_observers;
 
 	double m_lastX;
 	double m_lastY;
