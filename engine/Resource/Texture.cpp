@@ -3,6 +3,8 @@
 #include "GL/glew.h"
 #include "SOIL/SOIL.h"
 
+#include <iostream>
+
 Texture::Texture() : m_textureId(-1), m_isCubeMap(false)
 {
 }
@@ -26,6 +28,8 @@ Texture::Texture(std::string x, std::string y, std::string z, std::string negx, 
 		SOIL_FLAG_MIPMAPS
 	);
 	m_isCubeMap = true;
+
+	std::cout << m_textureId << '\n';
 }
 
 void Texture::Load(const std::string& filepath)

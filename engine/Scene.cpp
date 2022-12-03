@@ -2,7 +2,9 @@
 
 Scene::Scene()
 {
-	m_skydome.GetTransformation().AddScale(glm::vec3(2, 2, 2));
+#ifndef SKYBOX
+	m_sky.GetTransformation().AddScale(glm::vec3(2, 2, 2));
+#endif
 }
 
 void Scene::AddObject(const DrawableObject& object)
@@ -63,7 +65,12 @@ void Scene::AddLight(const std::shared_ptr<AbstractLight>& light)
 	UpdateObjects();
 }
 
-Skydome& Scene::GetSkydome()
+#ifdef SKYBOX
+SkyBox
+#else
+Skydome
+#endif
+& Scene::GetSky()
 {
-	return m_skydome;
+	return m_sky;
 }

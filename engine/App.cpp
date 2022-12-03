@@ -14,30 +14,22 @@ App::App(const int width, const int height, const char *title) :
     m_window(width, height, title)
 {
     m_window.EnableVSync();
-
     RegisterDefaultKeyEvents();
 	m_scenes.emplace_back();
-
-    auto& scene = m_scenes.back();
-	DrawableObject object;
-
-	scene.AddObject(object);
-	scene.AddLight(std::make_shared<SpotLight>());
 }
 
 void App::Run()
 { 
-    // Set correct light position
     m_scenes[Configuration::Level].UpdateObjects();
 
     while (m_window.ShoudlClose() == false)
     {
+		m_renderer.Draw(m_scenes[Configuration::Level].GetSky());
         m_renderer.Clear();
-        for (auto& object : m_scenes[Configuration::Level].GetObjects())
+        /*for (auto& object : m_scenes[Configuration::Level].GetObjects())
         {
             m_renderer.Draw(object);
-        }
-		m_renderer.Draw(m_scenes[Configuration::Level].GetSkydome());
+        }*/
 
         m_window.PollEvents();
         m_window.SwapBuffers();

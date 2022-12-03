@@ -4,7 +4,11 @@
 
 #include "Resource/DrawableObject.hpp"
 #include "Light/AbstractLight.hpp"
+#ifdef SKYBOX
+#include "Resource/SkyBox.hpp"
+#else
 #include "Resource/Skydome.hpp"
+#endif
 
 class Scene final
 {
@@ -25,7 +29,11 @@ public:
 
 	void AddLight(const std::shared_ptr<AbstractLight>& light);
 
-	[[nodiscard]] Skydome& GetSkydome();
+#ifdef SKYBOX
+	_NODISCARD SkyBox& GetSky();
+#else
+	_NODISCARD Skydome& GetSky();
+#endif
 
 private:
 	void UpdateLastObject();
@@ -34,5 +42,9 @@ private:
 
 	std::vector<DrawableObject> m_objects;
 	std::vector<std::shared_ptr<AbstractLight>> m_lights;
-	Skydome m_skydome;
+#ifdef SKYBOX
+	SkyBox m_sky;
+#else
+	Skydome m_sky;
+#endif
 };

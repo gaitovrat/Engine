@@ -8,7 +8,6 @@ layout(location=3) in vec3 tangent;
 out vec4 ex_worldPosition;
 out vec3 ex_worldNormal;
 out vec2 ex_textureCoordinates;
-out vec3 ex_tangent;
 
 uniform mat4 model;
 uniform mat4 view;
