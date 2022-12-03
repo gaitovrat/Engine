@@ -2,10 +2,12 @@
 
 #include "Resource/ResourceManager.hpp"
 
+#include <memory>
+
 SkyBox::SkyBox() :
-	DrawableObject("assets/mesh/skybox.obj", 
+	DrawableObject(ResourceManager::GetInstance().GetMesh("box.obj"),
 		ResourceManager::GetInstance().GetShader("skybox"), 
-		Texture(
+		std::make_shared<Texture>(
 			"assets/texture/skybox/posx.jpg",
 			"assets/texture/skybox/posy.jpg",
 			"assets/texture/skybox/posz.jpg",

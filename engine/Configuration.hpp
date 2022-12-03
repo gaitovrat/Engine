@@ -4,8 +4,10 @@
 
 struct Configuration
 {
-	static float playerSpeed;
-	static float sensivity;
-	static float level;
-	static std::string defaultShader;
+	static float PlayerSpeed;
+	static float Sensivity;
+	static float Level;
+	static std::string DefaultShader;
+	static std::string DefaultTexture;
+	static std::string DefaultMesh;
 };

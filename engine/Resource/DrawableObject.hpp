@@ -10,16 +10,12 @@
 #include "IResource.hpp"
 #include "Render/Vertex.hpp"
 
-class DrawableObject : public IResource
+class DrawableObject
 {
-	DrawableObject(const std::shared_ptr<Shader> shader, const Texture& texture);
-
 public:
 	DrawableObject();
 
-	DrawableObject(const std::vector<Vertex>& vertecies, const std::shared_ptr<Shader> shader, const Texture& texture);
-
-	DrawableObject(const std::string& filepath, const std::shared_ptr<Shader> shader, const Texture& texture);
+	DrawableObject(const std::shared_ptr<VertexBuffer>& vertexBuffer, const std::shared_ptr<Shader>& shader, const std::shared_ptr<Texture>& texture);
 	
 	virtual ~DrawableObject() = default;
 
@@ -29,24 +25,21 @@ public:
 
 	Transformation& GetTransformation();
 
-	[[nodiscard]] std::shared_ptr<Shader> GetShader();
+	[[nodiscard]] std::weak_ptr<Shader> GetShader();
 
-	[[nodiscard]] const std::shared_ptr<Shader> GetCShader() const;
+	[[nodiscard]] const std::weak_ptr<Shader> GetCShader() const;
 
-	[[nodiscard]] Texture& GetTexture();
+	[[nodiscard]] std::weak_ptr<Texture> GetTexture();
 
-	[[nodiscard]] const Texture& GetCTexture() const;
+	[[nodiscard]] const std::weak_ptr<Texture> GetCTexture() const;
 
-	void SetShader(const std::shared_ptr<Shader> shader);
+	void SetShader(const std::shared_ptr<Shader>& shader);
 
-	void SetTexture(const Texture& texture);
-
-	void Load(const std::string& filepath) override;
+	void SetTexture(const std::shared_ptr<Texture>& texture);
 
 private:
-	uint32_t m_vertexCount;
-	VertexBuffer m_vertexBuffer;
 	Transformation m_transformation;
+	std::shared_ptr<VertexBuffer> m_vertexBuffer;
     std::shared_ptr<Shader> m_shader;
-	Texture m_texture;
+	std::shared_ptr<Texture> m_texture;
 };

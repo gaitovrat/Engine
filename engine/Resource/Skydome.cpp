@@ -3,8 +3,9 @@
 #include "Resource/ResourceManager.hpp"
 
 Skydome::Skydome() :
-	DrawableObject("assets/mesh/skydome.obj",
+	DrawableObject(
+		ResourceManager::GetInstance().GetMesh("skydome.obj"),
 		ResourceManager::GetInstance().GetShader("texture"),
-		*ResourceManager::GetInstance().GetTexture("skydome.png"))
+		ResourceManager::GetInstance().GetTexture("skydome.png"))
 {
 }

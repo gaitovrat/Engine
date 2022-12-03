@@ -19,25 +19,25 @@ App::App(const int width, const int height, const char *title) :
 	m_scenes.emplace_back();
 
     auto& scene = m_scenes.back();
-	auto object = ResourceManager::GetInstance().GetDrawableObject("box.obj", "lights", "box.jpg");
+	DrawableObject object;
 
-	scene.AddObject(*object);
+	scene.AddObject(object);
 	scene.AddLight(std::make_shared<SpotLight>());
 }
 
 void App::Run()
 { 
     // Set correct light position
-    m_scenes[Configuration::level].UpdateObjects();
+    m_scenes[Configuration::Level].UpdateObjects();
 
     while (m_window.ShoudlClose() == false)
     {
         m_renderer.Clear();
-        for (auto& object : m_scenes[Configuration::level].GetObjects())
+        for (auto& object : m_scenes[Configuration::Level].GetObjects())
         {
             m_renderer.Draw(object);
         }
-		m_renderer.Draw(m_scenes[Configuration::level].GetSkydome());
+		m_renderer.Draw(m_scenes[Configuration::Level].GetSkydome());
 
         m_window.PollEvents();
         m_window.SwapBuffers();
@@ -48,23 +48,23 @@ void App::RegisterDefaultKeyEvents()
 {
 	for (const std::vector listeners = {
 		     KeyboardEventListener(m_window, KEY_S, []() {
-			     Camera::GetInstance().MoveBackward(Configuration::playerSpeed);
+			     Camera::GetInstance().MoveBackward(Configuration::PlayerSpeed);
 			     std::cout << "move backward clicked\n";
 		     }),
 		     KeyboardEventListener(m_window, KEY_W, []() {
-			     Camera::GetInstance().MoveForward(Configuration::playerSpeed);
+			     Camera::GetInstance().MoveForward(Configuration::PlayerSpeed);
 			     std::cout << "move backward clicked\n";
 		     }),
 		     KeyboardEventListener(m_window, KEY_A, []() {
-			     Camera::GetInstance().MoveLeft(Configuration::playerSpeed);
+			     Camera::GetInstance().MoveLeft(Configuration::PlayerSpeed);
 			     std::cout << "move backward clicked\n";
 		     }),
 		     KeyboardEventListener(m_window, KEY_D, []() {
-			     Camera::GetInstance().MoveRight(Configuration::playerSpeed);
+			     Camera::GetInstance().MoveRight(Configuration::PlayerSpeed);
 			     std::cout << "move backward clicked\n";
 		     }),
 		     KeyboardEventListener(m_window, KEY_S, []() {
-			     Camera::GetInstance().MoveBackward(Configuration::playerSpeed);
+			     Camera::GetInstance().MoveBackward(Configuration::PlayerSpeed);
 			     std::cout << "move backward clicked\n";
 		     }),
 		     KeyboardEventListener(m_window, KEY_ESCAPE, [this]() {

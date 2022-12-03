@@ -6,7 +6,7 @@
 #include "Shader.hpp"
 #include "IResource.hpp"
 #include "Texture.hpp"
-#include "DrawableObject.hpp"
+#include "Render/VertexBuffer.hpp"
 
 class ResourceManager final
 {
@@ -16,7 +16,7 @@ class ResourceManager final
 
 	static std::string ShaderName(const std::string& name);
 
-	static std::string DrawableObjectName(const std::string& name);
+	static std::string MeshName(const std::string& name);
 
 public:
 
@@ -24,15 +24,15 @@ public:
 
 	void AddShader(std::string name);
 
-	std::shared_ptr<Shader> GetShader(std::string name);
+	_NODISCARD std::shared_ptr<Shader> GetShader(std::string name);
 
 	void AddTexture(std::string name);
 
-	std::shared_ptr<Texture> GetTexture(std::string name);
+	_NODISCARD std::shared_ptr<Texture> GetTexture(std::string name);
 
-	std::shared_ptr<DrawableObject> GetDrawableObject(std::string name, std::string shaderName, std::string textureName);
+	_NODISCARD std::shared_ptr<VertexBuffer> GetMesh(std::string name);
 
-	void AddDrawableObject(std::string name, std::string shaderName, std::string textureName);
+	void AddMesh(std::string name);
 
 private:
 	std::map<std::string, std::shared_ptr<IResource>> m_resources;

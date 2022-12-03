@@ -28,14 +28,17 @@ void Scene::UpdateLastObject()
 void Scene::UpdateObject(DrawableObject& object)
 {
 	auto shader = object.GetShader();
-	if (m_lights.size() != 0)
+	if (auto shaderLock = shader.lock())
 	{
-		shader->SetLights(m_lights);
-	}
+		if (m_lights.size() != 0)
+		{
+			shaderLock->SetLights(m_lights);
+		}
 
-	for (const auto& light : m_lights)
-	{
-		light->AddObserver(shader.get());
+		for (const auto& light : m_lights)
+		{
+			light->AddObserver(shaderLock.get());
+		}
 	}
 }
 

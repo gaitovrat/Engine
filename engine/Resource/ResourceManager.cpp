@@ -22,7 +22,7 @@ std::string ResourceManager::ShaderName(const std::string& name)
 	return "shader." + name;
 }
 
-std::string ResourceManager::DrawableObjectName(const std::string& name)
+std::string ResourceManager::MeshName(const std::string& name)
 {
 	return "object." + name;
 }
@@ -67,24 +67,17 @@ std::shared_ptr<Texture> ResourceManager::GetTexture(const std::string name)
 	return std::dynamic_pointer_cast<Texture>(m_resources[TextureName(name)]);
 }
 
-std::shared_ptr<DrawableObject> ResourceManager::GetDrawableObject(const std::string name, const std::string shaderName, const std::string textureName)
+std::shared_ptr<VertexBuffer> ResourceManager::GetMesh(const std::string name)
 {
-	auto shader = GetShader(shaderName);
-	auto texture = GetTexture(textureName);
-
-	if (!m_resources.contains(DrawableObjectName(name)))
+	if (!m_resources.contains(MeshName(name)))
 	{
-		AddDrawableObject(name, shaderName, textureName);
+		AddMesh(name);
 	}
 
-	auto object = std::dynamic_pointer_cast<DrawableObject>(m_resources[DrawableObjectName(name)]);
-	object->SetShader(shader);
-	object->SetTexture(*texture);
-
-	return object;
+	return std::dynamic_pointer_cast<VertexBuffer>(m_resources[MeshName(name)]);
 }
 
-void ResourceManager::AddDrawableObject(const std::string name, const std::string shaderName, const std::string textureName)
+void ResourceManager::AddMesh(const std::string name)
 {
-	m_resources[DrawableObjectName(name)] = std::make_shared<DrawableObject>("assets/mesh/" + name, GetShader(shaderName), *GetTexture(textureName));
+	m_resources[MeshName(name)] = std::make_shared<VertexBuffer>("assets/mesh/" + name);
 }
