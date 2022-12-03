@@ -16,6 +16,11 @@ App::App(const int width, const int height, const char *title) :
     m_window.EnableVSync();
     RegisterDefaultKeyEvents();
 	m_scenes.emplace_back();
+
+	auto& scene = m_scenes.back();
+
+	DrawableObject object;
+	scene.AddObject(object);
 }
 
 void App::Run()
@@ -24,12 +29,12 @@ void App::Run()
 
     while (m_window.ShoudlClose() == false)
     {
-		m_renderer.Draw(m_scenes[Configuration::Level].GetSky());
         m_renderer.Clear();
-        /*for (auto& object : m_scenes[Configuration::Level].GetObjects())
+		m_renderer.Draw(m_scenes[Configuration::Level].GetSky());
+        for (auto& object : m_scenes[Configuration::Level].GetObjects())
         {
             m_renderer.Draw(object);
-        }*/
+        }
 
         m_window.PollEvents();
         m_window.SwapBuffers();

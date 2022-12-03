@@ -2,14 +2,11 @@
 
 out vec4 frag_colour;
 
-in vec3 ex_worldNormal;
-in vec4 ex_worldPosition;
-in vec2 ex_textureCoordinates;
-in vec3 ex_tangent;
+in vec3 ex_position;
 
-uniform sampler2D textureID;
+uniform samplerCube textureID;
 
 void main () 
 {
-	frag_colour = texture(textureID, ex_textureCoordinates);
+	frag_colour = texture(textureID, ex_position);
 }

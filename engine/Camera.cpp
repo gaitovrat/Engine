@@ -74,10 +74,9 @@ void Camera::UpdateTarget(glm::vec3 eye)
 
 void Camera::Rotate(const double x, const double y)
 {
-    std::cout << x << " " << y << std::endl;
-
     float xoffset = x - m_lastX;
     float yoffset = m_lastY - y;
+
     m_lastX = x;
     m_lastY = y;
 

@@ -2,9 +2,6 @@
 
 Scene::Scene()
 {
-#ifndef SKYBOX
-	m_sky.GetTransformation().AddScale(glm::vec3(2, 2, 2));
-#endif
 }
 
 void Scene::AddObject(const DrawableObject& object)

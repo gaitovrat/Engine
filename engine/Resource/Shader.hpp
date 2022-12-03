@@ -50,6 +50,8 @@ private:
 
 	void Init(const char* vertexShaderSource, const char* fragmentShaderSource);
 
+	int CreateUniform(const std::string& name);
+
 	int32_t m_id;
 	int32_t m_modelId;
 	glm::mat4 m_modelMatrix;

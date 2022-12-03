@@ -1,6 +1,7 @@
 #include "SkyBox.hpp"
 
 #include "Resource/ResourceManager.hpp"
+#include "Camera.hpp"
 
 #include <memory>
 

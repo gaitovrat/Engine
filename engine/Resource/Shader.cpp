@@ -55,11 +55,11 @@ void Shader::Link()
 		throw GLException("Unable to link program - " + ShaderUtil::GetInfo(m_id));
 	}
 
-	m_modelId = glGetUniformLocation(m_id, "model");
-	m_projectionId = glGetUniformLocation(m_id, "projection");
-	m_viewId = glGetUniformLocation(m_id, "view");
-	m_eyeId = glGetUniformLocation(m_id, "eye");
-	m_textureId = glGetUniformLocation(m_id, "textureID");
+	m_modelId = CreateUniform("model");
+	m_projectionId = CreateUniform("projection");
+	m_viewId = CreateUniform("view");
+	m_eyeId = CreateUniform("eye");
+	m_textureId = CreateUniform("textureID");
 }
 
 void Shader::Activate() const
@@ -95,6 +95,17 @@ void Shader::Init(const char* vertexShaderSource, const char* fragmentShaderSour
 {
 	m_shaders.emplace_back(vertexShaderSource, VERTEX);
 	m_shaders.emplace_back(fragmentShaderSource, FRAGMENT);
+}
+
+int Shader::CreateUniform(const std::string& name)
+{
+	auto id = glGetUniformLocation(m_id, name.c_str());
+	if (id < 0)
+	{
+		std::cout << name << " uniform not found\n";
+	}
+
+	return id;
 }
 
 void Shader::UpdateLights(const std::vector<std::weak_ptr<AbstractLight>>& lights) const
@@ -164,6 +175,7 @@ void Shader::Notify(const EObserverEvent event, ISubject* source)
     {
         case VIEW_MATRIX_CHANGED:
             m_viewMatrix = camera.ToMatrix();
+
 			for (const auto& light : m_lights)
 			{
 				if (auto lightLock = light.lock())
