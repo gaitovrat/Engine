@@ -31,9 +31,13 @@ public:
 
 	void SetLights(const std::vector<std::shared_ptr<AbstractLight>>& lights);
 
-	void UpdateLights(const std::vector<std::shared_ptr<AbstractLight>>& lights) const;
+	void SetLights(const std::vector<std::weak_ptr<AbstractLight>>& lights);
 
-	void UpdateLight(const std::shared_ptr<AbstractLight>& light, uint64_t index) const;
+	void UpdateLights(const std::vector<std::weak_ptr<AbstractLight>>& lights) const;
+
+	void UpdateLight(const std::weak_ptr<AbstractLight>& light, uint64_t index) const;
+
+	void UpdateLight(AbstractLight* light, uint64_t index) const;
 
 	void UpdateUniforms() const;
 
@@ -57,5 +61,5 @@ private:
 	int32_t m_eyeId;
 	int32_t m_textureId;
 
-	std::vector<std::shared_ptr<AbstractLight>> m_lights;
+	std::vector<std::weak_ptr<AbstractLight>> m_lights;
 };

@@ -5,7 +5,7 @@
 
 #include <iostream>
 
-Camera::Camera() : m_eye(0.0f, 0.0f, 3.0f), m_target(0.0f, 0.0f, -1.0f), m_up(0.0f, 1.0f, 0.0f), m_lastX(), m_lastY(), m_pitch(), m_yaw()
+Camera::Camera() : m_eye(0.0f, 0.0f, 3.0f), m_target(0.0f, 0.0f, -1.0f), m_up(0.0f, 1.0f, 0.0f), m_lastX(), m_lastY(), m_pitch(), m_yaw(), m_height(), m_width()
 {
 }
 
@@ -53,11 +53,14 @@ void Camera::NotifyAll(const EObserverEvent event)
 {
 	for (const auto& observer : m_observers)
 	{
-		observer->Notify(event, this);
+        if (observer != nullptr)
+        {
+            observer->Notify(event, this);
+        }
 	}
 }
 
-void Camera::AddObserver(const std::shared_ptr<IObserver>& observer)
+void Camera::AddObserver(IObserver* observer)
 {
     m_observers.push_back(observer);
 }

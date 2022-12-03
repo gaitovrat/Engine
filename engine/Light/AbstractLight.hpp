@@ -10,18 +10,10 @@
 class AbstractLight : public ISubject
 {
 public:
-	~AbstractLight() override = default;
+	virtual ~AbstractLight() = default;
 
 	AbstractLight(const glm::vec3& position, const glm::vec3& direction, float cutOff, float outerCutOff, float constant, float linear, float quadratic, const glm::vec3& ambient,
 		const glm::vec3& diffuse, const glm::vec3& specular);
-
-	AbstractLight(const AbstractLight& other) = default;
-
-	AbstractLight(AbstractLight&& other) noexcept;
-
-	AbstractLight& operator=(const AbstractLight& other);
-
-	AbstractLight& operator=(AbstractLight&& other) noexcept;
 
 	[[nodiscard]] glm::vec3 Position() const;
 
@@ -55,7 +47,7 @@ public:
 
 	[[nodiscard]] virtual ELightType Type() const = 0;
 
-	void AddObserver(const std::shared_ptr<IObserver>& observer) override;
+	void AddObserver(IObserver* observer) override;
 
 	void NotifyAll(EObserverEvent event) override;
 
@@ -72,7 +64,7 @@ public:
 	void SetOuterCutOff(float outerCutOff);
 
 private:
-	std::vector<std::shared_ptr<IObserver>> m_observers;
+	std::vector<IObserver*> m_observers;
 
 	glm::vec3 m_position;
 	glm::vec3 m_direction;

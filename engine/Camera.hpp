@@ -28,7 +28,7 @@ public:
 
 	void NotifyAll(EObserverEvent event) override;
 
-	void AddObserver(const std::shared_ptr<IObserver>& observer) override;
+	void AddObserver(IObserver* observer) override;
 
 	void Rotate(double x, double y);
 
@@ -39,6 +39,7 @@ public:
 	[[nodiscard]] int Height() const;
 
 	[[nodiscard]] glm::vec3 Eye() const;
+
 	[[nodiscard]] glm::vec3 Target() const;
 
 private:
@@ -48,7 +49,7 @@ private:
 	glm::vec3 m_target;
 	glm::vec3 m_up;
 
-	std::vector<std::shared_ptr<IObserver>> m_observers;
+	std::vector<IObserver*> m_observers;
 
 	double m_lastX;
 	double m_lastY;

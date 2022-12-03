@@ -19,64 +19,6 @@ AbstractLight::AbstractLight(const glm::vec3& position, const glm::vec3& directi
 {
 }
 
-AbstractLight::AbstractLight(AbstractLight&& other) noexcept:
-	m_observers(std::move(other.m_observers)),
-	m_position(other.m_position),
-    m_direction(other.m_direction),
-    m_cutOff(other.m_cutOff),
-	m_outerCutOff(other.m_outerCutOff),
-	m_constant(other.m_constant),
-	m_linear(other.m_linear),
-	m_quadratic(other.m_quadratic),
-	m_ambient(other.m_ambient),
-	m_diffuse(other.m_diffuse),
-	m_specular(other.m_specular),
-	m_id(other.m_id)
-{
-}
-
-AbstractLight& AbstractLight::operator=(const AbstractLight& other)
-{
-	if (this == &other)
-		return *this;
-
-	m_observers = other.m_observers;
-	m_position = other.m_position;
-	m_direction = other.m_direction;
-	m_cutOff = other.m_cutOff;
-	m_outerCutOff = other.m_outerCutOff;
-	m_constant = other.m_constant;
-	m_linear = other.m_linear;
-	m_quadratic = other.m_quadratic;
-	m_ambient = other.m_ambient;
-	m_diffuse = other.m_diffuse;
-	m_specular = other.m_specular;
-	m_id = other.m_id;
-
-	return *this;
-}
-
-AbstractLight& AbstractLight::operator=(AbstractLight&& other) noexcept
-{
-	if (this == &other)
-		return *this;
-
-	m_observers = std::move(other.m_observers);
-	m_position = other.m_position;
-	m_direction = other.m_direction;
-	m_cutOff = other.m_cutOff;
-	m_outerCutOff = other.m_outerCutOff;
-	m_constant = other.m_constant;
-	m_linear = other.m_linear;
-	m_quadratic = other.m_quadratic;
-	m_ambient = other.m_ambient;
-	m_diffuse = other.m_diffuse;
-	m_specular = other.m_specular;
-	m_id = other.m_id;
-
-	return *this;
-}
-
 glm::vec3 AbstractLight::Position() const
 {
 	return m_position;
@@ -152,7 +94,7 @@ uint64_t AbstractLight::Id() const
     return m_id;
 }
 
-void AbstractLight::AddObserver(const std::shared_ptr<IObserver>& observer)
+void AbstractLight::AddObserver(IObserver* observer)
 {
     for (const auto& element : m_observers)
     {
@@ -169,7 +111,10 @@ void AbstractLight::NotifyAll(const EObserverEvent event)
 {
     for (const auto& element : m_observers)
     {
-        element->Notify(event, this);
+		if (element != nullptr)
+		{
+			element->Notify(event, this);
+		}
     }
 }
 

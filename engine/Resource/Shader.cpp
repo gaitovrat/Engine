@@ -16,7 +16,7 @@ Shader::Shader() : m_id(0), m_modelId(0), m_modelMatrix(1.f), m_projectionId(0),
 	m_id = glCreateProgram();
 
 	auto& camera = Camera::GetInstance();
-    camera.AddObserver(std::shared_ptr<Shader>(this));
+    camera.AddObserver(this);
 	m_viewMatrix = camera.ToMatrix();
 	SetProjectionMatrix(camera.Width(), camera.Height());
 }
@@ -72,9 +72,18 @@ void Shader::SetModelMatrix(const glm::mat4 modelMatrix)
 	m_modelMatrix = modelMatrix;
 }
 
-void Shader::SetLights(const std::vector<std::shared_ptr<AbstractLight>>& lights)
+void Shader::SetLights(const std::vector<std::weak_ptr<AbstractLight>>& lights)
 {
 	m_lights = lights;
+}
+
+void Shader::SetLights(const std::vector<std::shared_ptr<AbstractLight>>& lights)
+{
+	m_lights.clear();
+	for (const auto& light : lights)
+	{
+		m_lights.push_back(light);
+	}
 }
 
 void Shader::SetProjectionMatrix(const int width, const int height)
@@ -88,15 +97,26 @@ void Shader::Init(const char* vertexShaderSource, const char* fragmentShaderSour
 	m_shaders.emplace_back(fragmentShaderSource, FRAGMENT);
 }
 
-void Shader::UpdateLights(const std::vector<std::shared_ptr<AbstractLight>>& lights) const
+void Shader::UpdateLights(const std::vector<std::weak_ptr<AbstractLight>>& lights) const
 {
 	for (const auto& light : lights)
 	{
-		UpdateLight(light, light->Id());
+		if (auto lightLock = light.lock())
+		{
+			UpdateLight(lightLock, lightLock->Id());
+		}
 	}
 }
 
-void Shader::UpdateLight(const std::shared_ptr<AbstractLight>& light, const uint64_t index) const
+void Shader::UpdateLight(const std::weak_ptr<AbstractLight>& light, const uint64_t index) const
+{
+	if (auto lightLock = light.lock())
+	{
+		UpdateLight(lightLock.get(), index);
+	}
+}
+
+void Shader::UpdateLight(AbstractLight* light, uint64_t index) const
 {
 	const auto position = glGetUniformLocation(m_id, ("lights[" + std::to_string(index) + "].position").c_str());
 	const auto direction = glGetUniformLocation(m_id, ("lights[" + std::to_string(index) + "].direction").c_str());
@@ -146,10 +166,13 @@ void Shader::Notify(const EObserverEvent event, ISubject* source)
             m_viewMatrix = camera.ToMatrix();
 			for (const auto& light : m_lights)
 			{
-				if (light->Type() == SPOT)
+				if (auto lightLock = light.lock())
 				{
-					light->SetPosition(camera.Eye());
-					light->SetDirection(camera.Target());
+					if (lightLock->Type() == SPOT)
+					{
+						lightLock->SetPosition(camera.Eye());
+						lightLock->SetDirection(camera.Target());
+					}
 				}
 			}
             break;
@@ -157,8 +180,11 @@ void Shader::Notify(const EObserverEvent event, ISubject* source)
 			SetProjectionMatrix(camera.Width(), camera.Height());
             break;
 		case LIGHT_POSITION_CHANGED:
-			const auto light = dynamic_cast<AbstractLight*>(source);
-			UpdateLight(std::shared_ptr<AbstractLight>(light), light->Id());
+			if (source != nullptr)
+			{
+				const auto light = dynamic_cast<AbstractLight*>(source);
+				UpdateLight(light, light->Id());
+			}
 			break;
     }
 }
