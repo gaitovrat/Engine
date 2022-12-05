@@ -29,7 +29,9 @@ void Renderer::Draw(DrawableObject& object)
 
 void Renderer::Draw(SkyBox& skyBox)
 {
+	glDisable(GL_DEPTH_TEST);
 	skyBox.Activate();
 	glDrawElements(GL_TRIANGLES, skyBox.GetVertexCount(), GL_UNSIGNED_INT, nullptr);
 	glClear(GL_DEPTH_BUFFER_BIT);
+	glEnable(GL_DEPTH_TEST);
 }
