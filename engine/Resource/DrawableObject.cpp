@@ -3,6 +3,8 @@
 #include "ResourceManager.hpp"
 #include "Configuration.hpp"
 
+uint32_t DrawableObject::s_id = 0;
+
 DrawableObject::DrawableObject() : DrawableObject(
     ResourceManager::GetInstance().GetMesh(Configuration::DefaultMesh),
     ResourceManager::GetInstance().GetShader(Configuration::DefaultShader), 
@@ -16,7 +18,7 @@ DrawableObject::DrawableObject(const std::shared_ptr<VertexBuffer>& vertexBuffer
 }
 
 DrawableObject::DrawableObject(const std::shared_ptr<VertexBuffer>& vertexBuffer, const std::shared_ptr<Shader>& shader, const std::optional<std::shared_ptr<Texture>>& texture)
-    : m_vertexBuffer(vertexBuffer), m_shader(shader), m_texture(texture)
+    : m_vertexBuffer(vertexBuffer), m_shader(shader), m_texture(texture), m_id(s_id++)
 {
 }
 
@@ -72,6 +74,11 @@ const std::optional<std::weak_ptr<Texture>> DrawableObject::GetCTexture() const
 bool DrawableObject::HasIndexes() const
 {
     return m_vertexBuffer->HasIndexes();
+}
+
+uint32_t DrawableObject::Id() const
+{
+    return m_id;
 }
 
 void DrawableObject::SetShader(const std::shared_ptr<Shader>& shader)

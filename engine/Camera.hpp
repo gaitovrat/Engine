@@ -34,13 +34,23 @@ public:
 
 	void UpdateViewport(int width, int height);
 
-	[[nodiscard]] int Width() const;
+	_NODISCARD glm::mat4 Projection();
 
-	[[nodiscard]] int Height() const;
+	_NODISCARD int Width() const;
 
-	[[nodiscard]] glm::vec3 Eye() const;
+	_NODISCARD int Height() const;
 
-	[[nodiscard]] glm::vec3 Target() const;
+	_NODISCARD glm::vec3 Eye() const;
+
+	_NODISCARD glm::vec3 Target() const;
+
+	_NODISCARD double ClickedX();
+
+	_NODISCARD double ClickedY();
+
+	void SetClickedX(double x);
+
+	void SetClickedY(double y);
 
 private:
 	void UpdateTarget(glm::vec3 target);
@@ -58,4 +68,7 @@ private:
 
 	int m_width;
 	int m_height;
+
+	double m_clickedX;
+	double m_clickedY;
 };

@@ -30,7 +30,16 @@ public:
 
 	void Close();
 
+	std::function<void()> LeftClick() const;
+
+	std::function<void()> RightClick() const;
+
+	void SetLeftClick(std::function<void()> leftClick);
+
+	void SetRightClick(std::function<void()> rightClick);
+
 private:
-    
+	std::function<void()> m_leftClick;
+	std::function<void()> m_rightClick;
 	GLFWwindow* m_window;
 };

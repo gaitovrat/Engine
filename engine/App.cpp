@@ -2,6 +2,8 @@
 
 #include <GLFW/glfw3.h>
 #include <iostream>
+#include <cstdint>
+#include <glm/ext/matrix_projection.hpp>
 
 #include "Resource/ResourceManager.hpp"
 #include "KeyboardEvent/KeyboardEvent.hpp"
@@ -17,20 +19,74 @@
 #include "Resource/Model/SuziFlat.hpp"
 #include "Resource/Model/Tree.hpp"
 
+static glm::vec3 point = glm::vec3(3, 0, 0);
+static glm::vec3 axis = glm::vec3(0, 1, 0);
+
 App::App(const int width, const int height, const char *title) :
     m_window(width, height, title)
 {
     m_window.EnableVSync();
     RegisterDefaultKeyEvents();
 
+	m_window.SetLeftClick([=]() {
+		if (Configuration::Level == 0)
+		{
+			float depth;
+			uint32_t index;
+
+			int x = Camera::GetInstance().ClickedX();
+			int y = Camera::GetInstance().ClickedY();
+
+			auto newy = Camera::GetInstance().Height() - y;
+
+			glReadPixels(x, newy, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &depth);
+			glReadPixels(x, newy, 1, 1, GL_STENCIL_INDEX, GL_UNSIGNED_INT, &index);
+
+			auto screenX = glm::vec3(x, newy, depth);
+			glm::mat4 view = Camera::GetInstance().ToMatrix();
+
+			glm::mat4 projection = Camera::GetInstance().Projection();
+			auto viewPort = glm::vec4(0, 0, Camera::GetInstance().Width(), Camera::GetInstance().Height());
+
+			glm::vec3 pos = glm::unProject(screenX, view, projection, viewPort);
+
+			DrawableObject object;
+			object.GetTransformation().AddTranslate(glm::vec3(pos.x, pos.y, pos.z));
+			object.GetTransformation().AddScale(glm::vec3(0.1f));
+			m_scenes[Configuration::Level].AddObject(object);
+		}
+	});
+	m_window.SetRightClick([=]() {
+		float depth;
+		uint32_t index;
+
+		int x = Camera::GetInstance().ClickedX();
+		int y = Camera::GetInstance().ClickedY();
+
+		int newy = Camera::GetInstance().Height() - y;
+
+		glReadPixels(x, newy, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &depth);
+		glReadPixels(x, newy, 1, 1, GL_STENCIL_INDEX, GL_UNSIGNED_INT, &index);
+
+		std::cout << "ID: " << index << '\n';
+
+		auto screenX = glm::vec3(x, newy, depth);
+		glm::mat4 view = Camera::GetInstance().ToMatrix();
+
+		glm::mat4 projection = Camera::GetInstance().Projection();
+		auto viewPort = glm::vec4(0, 0, Camera::GetInstance().Width(), Camera::GetInstance().Height());
+
+		glm::vec3 pos = glm::unProject(screenX, view, projection, viewPort);
+	});
 
 	m_scenes.emplace_back();
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 3; i++) 
+	{
 		m_scenes.emplace_back(false);
 	}
 
 	// Level 0
-	auto* scene = &m_scenes[0];
+	auto *scene = &m_scenes[0];
 	scene->AddObject(DrawableObject());
 
 	// Level 1
@@ -112,6 +168,7 @@ void App::Run()
 		{
 			m_renderer.Draw(sky.value());
 		}
+
         for (auto& object : m_scenes[Configuration::Level].GetObjects())
         {
             m_renderer.Draw(object);

@@ -5,6 +5,8 @@
 #include "KeyboardEvent/KeyboardEvent.hpp"
 #include "Camera.hpp"
 
+static Window* s_window = nullptr;
+
 Window::Window(const int width, const int height, const char* title)
 {
     if (glfwInit() == false)
@@ -24,6 +26,8 @@ Window::Window(const int width, const int height, const char* title)
     {
         throw GLFWException("Unable to create window");
     }
+
+    s_window = this;
     
     glfwMakeContextCurrent(m_window);
     glewExperimental = GL_TRUE;
@@ -38,6 +42,29 @@ Window::Window(const int width, const int height, const char* title)
 
     glfwSetCursorPosCallback(m_window, [](GLFWwindow* window, const double l_x, const double l_y) {
             Camera::GetInstance().Rotate(l_x, l_y);
+    });
+    glfwSetMouseButtonCallback(m_window, [](GLFWwindow* window, int button, int action, int mods) {
+        double x;
+        double y;
+
+        glfwGetCursorPos(window, &x, &y);
+        Camera::GetInstance().SetClickedX(x);
+        Camera::GetInstance().SetClickedY(y);
+
+        if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS)
+        {
+            if (s_window != nullptr)
+            {
+                s_window->RightClick()();
+            }
+        } 
+        else if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
+        {
+            if (s_window != nullptr)
+            {
+                s_window->LeftClick()();
+            }
+        }
     });
     glfwSetWindowSizeCallback(m_window, [](GLFWwindow* window, const int l_width, const int l_height) {
         Camera::GetInstance().UpdateViewport(l_width, l_height);
@@ -104,4 +131,24 @@ bool Window::IsPressed(EKey key)
 void Window::Close()
 {
     glfwSetWindowShouldClose(m_window, true);
+}
+
+std::function<void()> Window::LeftClick() const
+{
+    return m_leftClick;
+}
+
+std::function<void()> Window::RightClick() const
+{
+    return m_rightClick;
+}
+
+void Window::SetLeftClick(std::function<void()> leftClick)
+{
+    m_leftClick = leftClick;
+}
+
+void Window::SetRightClick(std::function<void()> rightClick)
+{
+    m_rightClick = rightClick;
 }

@@ -108,6 +108,11 @@ void Camera::UpdateViewport(int width, int height)
     NotifyAll(PROJECTION_MATRIX_CHANGED);
 }
 
+glm::mat4 Camera::Projection()
+{
+    return glm::perspective(glm::radians(45.0f), float(m_width) / float(m_height), 0.1f, 100.0f);
+}
+
 int Camera::Width() const
 {
     return m_width;
@@ -126,4 +131,24 @@ glm::vec3 Camera::Eye() const
 glm::vec3 Camera::Target() const
 {
     return m_target;
+}
+
+double Camera::ClickedX()
+{
+    return m_clickedX;
+}
+
+double Camera::ClickedY()
+{
+    return m_clickedY;
+}
+
+void Camera::SetClickedX(double x)
+{
+    m_clickedX = x;
+}
+
+void Camera::SetClickedY(double y)
+{
+    m_clickedY = y;
 }

@@ -40,11 +40,15 @@ public:
 
 	_NODISCARD bool HasIndexes() const;
 
+	_NODISCARD uint32_t Id() const;
+
 	void SetShader(const std::shared_ptr<Shader>& shader);
 
 	void SetTexture(const std::shared_ptr<Texture>& texture);
 
 private:
+	uint32_t m_id;
+	static uint32_t s_id;
 	Transformation m_transformation;
 	std::shared_ptr<VertexBuffer> m_vertexBuffer;
     std::shared_ptr<Shader> m_shader;

@@ -7,6 +7,8 @@
 Renderer::Renderer()
 {
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_STENCIL_TEST);
+	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
 }
 
 void Renderer::Clear()
@@ -17,6 +19,7 @@ void Renderer::Clear()
 void Renderer::Draw(DrawableObject& object)
 {
 	object.Activate();
+	glStencilFunc(GL_ALWAYS, object.Id(), 0xFF);
 	if (object.HasIndexes())
 	{
 		glDrawElements(GL_TRIANGLES, object.GetVertexCount(), GL_UNSIGNED_INT, nullptr);
