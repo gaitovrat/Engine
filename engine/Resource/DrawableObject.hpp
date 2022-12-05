@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <cstdint>
+#include <optional>
 
 #include "Shader.hpp"
 #include "Render/VertexBuffer.hpp"
@@ -16,22 +17,28 @@ public:
 	DrawableObject();
 
 	DrawableObject(const std::shared_ptr<VertexBuffer>& vertexBuffer, const std::shared_ptr<Shader>& shader, const std::shared_ptr<Texture>& texture);
+
+	DrawableObject(const std::shared_ptr<VertexBuffer>& vertexBuffer, const std::shared_ptr<Shader>& shader, const std::optional<std::shared_ptr<Texture>>& texture);
+
+	DrawableObject(const std::shared_ptr<VertexBuffer>& vertexBuffer, const std::shared_ptr<Shader>& shader);
 	
 	virtual ~DrawableObject() = default;
 
 	void Activate();
 
-	[[nodiscard]] uint32_t GetVertexCount() const;
+	_NODISCARD uint32_t GetVertexCount() const;
 
 	Transformation& GetTransformation();
 
-	[[nodiscard]] std::weak_ptr<Shader> GetShader();
+	_NODISCARD std::weak_ptr<Shader> GetShader();
 
-	[[nodiscard]] const std::weak_ptr<Shader> GetCShader() const;
+	_NODISCARD const std::weak_ptr<Shader> GetCShader() const;
 
-	[[nodiscard]] std::weak_ptr<Texture> GetTexture();
+	_NODISCARD std::optional<std::weak_ptr<Texture>> GetTexture();
 
-	[[nodiscard]] const std::weak_ptr<Texture> GetCTexture() const;
+	_NODISCARD const std::optional<std::weak_ptr<Texture>> GetCTexture() const;
+
+	_NODISCARD bool HasIndexes() const;
 
 	void SetShader(const std::shared_ptr<Shader>& shader);
 
@@ -41,5 +48,5 @@ private:
 	Transformation m_transformation;
 	std::shared_ptr<VertexBuffer> m_vertexBuffer;
     std::shared_ptr<Shader> m_shader;
-	std::shared_ptr<Texture> m_texture;
+	std::optional<std::shared_ptr<Texture>> m_texture;
 };

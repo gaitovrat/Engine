@@ -17,7 +17,14 @@ void Renderer::Clear()
 void Renderer::Draw(DrawableObject& object)
 {
 	object.Activate();
-	glDrawElements(GL_TRIANGLES, object.GetVertexCount(), GL_UNSIGNED_INT, nullptr);
+	if (object.HasIndexes())
+	{
+		glDrawElements(GL_TRIANGLES, object.GetVertexCount(), GL_UNSIGNED_INT, nullptr);
+	}
+	else
+	{
+		glDrawArrays(GL_TRIANGLES, 0, object.GetVertexCount());
+	}
 }
 
 void Renderer::Draw(SkyBox& skyBox)

@@ -11,9 +11,20 @@ DrawableObject::DrawableObject() : DrawableObject(
 }
 
 DrawableObject::DrawableObject(const std::shared_ptr<VertexBuffer>& vertexBuffer, const std::shared_ptr<Shader>& shader, const std::shared_ptr<Texture>& texture) :
-	m_vertexBuffer(vertexBuffer), m_shader(shader), m_texture(texture)
+	DrawableObject(vertexBuffer, shader, decltype(m_texture){texture})
 {
 }
+
+DrawableObject::DrawableObject(const std::shared_ptr<VertexBuffer>& vertexBuffer, const std::shared_ptr<Shader>& shader, const std::optional<std::shared_ptr<Texture>>& texture)
+    : m_vertexBuffer(vertexBuffer), m_shader(shader), m_texture(texture)
+{
+}
+
+DrawableObject::DrawableObject(const std::shared_ptr<VertexBuffer>& vertexBuffer, const std::shared_ptr<Shader>& shader)
+    : DrawableObject(vertexBuffer, shader, decltype(m_texture){})
+{
+}
+
 
 void DrawableObject::Activate()
 {
@@ -22,7 +33,10 @@ void DrawableObject::Activate()
 	m_transformation.Activate();
     m_shader->UpdateUniforms();
     m_vertexBuffer->Bind();
-    m_texture->Bind();
+    if (m_texture.has_value())
+    {
+        m_texture.value()->Bind();
+    }
 }
 
 uint32_t DrawableObject::GetVertexCount() const
@@ -45,14 +59,19 @@ const std::weak_ptr<Shader> DrawableObject::GetCShader() const
     return m_shader;
 }
 
-std::weak_ptr<Texture> DrawableObject::GetTexture()
+std::optional<std::weak_ptr<Texture>> DrawableObject::GetTexture()
 {
     return m_texture;
 }
 
-const std::weak_ptr<Texture> DrawableObject::GetCTexture() const
+const std::optional<std::weak_ptr<Texture>> DrawableObject::GetCTexture() const
 {
     return m_texture;
+}
+
+bool DrawableObject::HasIndexes() const
+{
+    return m_vertexBuffer->HasIndexes();
 }
 
 void DrawableObject::SetShader(const std::shared_ptr<Shader>& shader)

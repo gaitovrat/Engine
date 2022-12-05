@@ -1,7 +1,15 @@
 #include "Scene.hpp"
 
-Scene::Scene()
+Scene::Scene() : Scene(true)
 {
+}
+
+Scene::Scene(bool withSkybox) : m_sky(decltype(m_sky){})
+{
+	if (withSkybox) 
+	{
+		m_sky = decltype(m_sky)(SkyBox());
+	}
 }
 
 void Scene::AddObject(const DrawableObject& object)
@@ -62,12 +70,7 @@ void Scene::AddLight(const std::shared_ptr<AbstractLight>& light)
 	UpdateObjects();
 }
 
-#ifdef SKYBOX
-SkyBox
-#else
-Skydome
-#endif
-& Scene::GetSky()
+std::optional<SkyBox>& Scene::GetSky()
 {
 	return m_sky;
 }

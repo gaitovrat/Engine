@@ -4,16 +4,14 @@
 
 #include "Resource/DrawableObject.hpp"
 #include "Light/AbstractLight.hpp"
-#ifdef SKYBOX
 #include "Resource/SkyBox.hpp"
-#else
-#include "Resource/Skydome.hpp"
-#endif
 
 class Scene final
 {
 public:
 	Scene();
+
+	Scene(bool withSkybox);
 
 	void AddObject(const DrawableObject& object);
 
@@ -29,11 +27,7 @@ public:
 
 	void AddLight(const std::shared_ptr<AbstractLight>& light);
 
-#ifdef SKYBOX
-	_NODISCARD SkyBox& GetSky();
-#else
-	_NODISCARD Skydome& GetSky();
-#endif
+	_NODISCARD std::optional<SkyBox>& GetSky();
 
 private:
 	void UpdateLastObject();
@@ -42,9 +36,5 @@ private:
 
 	std::vector<DrawableObject> m_objects;
 	std::vector<std::shared_ptr<AbstractLight>> m_lights;
-#ifdef SKYBOX
-	SkyBox m_sky;
-#else
-	Skydome m_sky;
-#endif
+	std::optional<SkyBox> m_sky;
 };

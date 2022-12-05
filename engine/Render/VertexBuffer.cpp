@@ -7,6 +7,8 @@
 
 #include <utility>
 
+
+
 VertexBuffer::VertexBuffer() : VertexBuffer(std::vector<Vertex>())
 {
 }
@@ -16,9 +18,10 @@ VertexBuffer::VertexBuffer(const std::string& filepath) : VertexBuffer()
     Load(filepath);
 }
 
-VertexBuffer::VertexBuffer(std::vector<Vertex> vertices) : m_vao(0), m_ibo(0), m_data(std::move(vertices))
+VertexBuffer::VertexBuffer(std::vector<Vertex> vertices) : m_vao(0), m_ibo(0), m_vertexCount(0), m_data(std::move(vertices)), m_hasIndexes(false)
 {
-	Init();
+    m_vertexCount = m_data.size();
+    Init();
 }
 
 void VertexBuffer::Init()
@@ -27,6 +30,10 @@ void VertexBuffer::Init()
 	{
 		return;
 	}
+
+    constexpr int offsets[] = { 0, (3 * sizeof(float)), (6 * sizeof(float)), (8 * sizeof(float)) };
+    constexpr int sizes[] = { 3, 3, 2, 3 };
+    constexpr int size = 4;
 
 	uint32_t vbo(0);
 	glGenBuffers(1, &vbo);
@@ -37,12 +44,10 @@ void VertexBuffer::Init()
 	glBindVertexArray(m_vao);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
-	constexpr int offsets[] = { 0, (3 * sizeof(float)), (6 * sizeof(float)), (8 * sizeof(float))};
-	constexpr int size[] = { 3, 3, 2, 3 };
-	for (int i = 0; i < 4; ++i)
+	for (int i = 0; i < size; ++i)
 	{
 		glEnableVertexAttribArray(i);
-		glVertexAttribPointer(i, size[i], GL_FLOAT, GL_FALSE, sizeof(m_data[0]), (void*)(offsets[i]));
+		glVertexAttribPointer(i, sizes[i], GL_FLOAT, GL_FALSE, sizeof(m_data[0]), (void*)(offsets[i]));
 	}
 }
 
@@ -114,7 +119,7 @@ void VertexBuffer::Load(const std::string& filepath)
         unsigned int* indices = nullptr;
         if (mesh->HasFaces())
         {
-
+            m_hasIndexes = true;
             indices = new unsigned int[mesh->mNumFaces * 3];
             for (unsigned int i = 0; i < mesh->mNumFaces; i++)
             {
@@ -126,9 +131,15 @@ void VertexBuffer::Load(const std::string& filepath)
             delete[] indices;
         }
 
+
         SetData(vertices);
         m_vertexCount = mesh->mNumFaces * 3;
     }
+}
+
+bool VertexBuffer::HasIndexes() const
+{
+    return m_hasIndexes;
 }
 
 uint32_t VertexBuffer::VertexCount() const
